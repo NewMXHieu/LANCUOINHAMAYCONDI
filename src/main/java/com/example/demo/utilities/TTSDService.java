@@ -1,6 +1,6 @@
-package PL.NHOM.QLTV.service;
+package com.example.demo.utilities;
 
-import PL.NHOM.QLTV.entity.ThietBi;
+import com.example.demo.entity.ThietBi;
 import org.springframework.data.domain.Page;
 
 public interface TTSDService {

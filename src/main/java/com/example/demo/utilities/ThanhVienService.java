@@ -1,6 +1,6 @@
-package PL.NHOM.QLTV.service;
+package com.example.demo.utilities;
 
-import PL.NHOM.QLTV.entity.ThanhVien;
+import com.example.demo.entity.ThanhVien;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

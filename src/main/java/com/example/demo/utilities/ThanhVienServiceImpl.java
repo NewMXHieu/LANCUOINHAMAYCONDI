@@ -1,7 +1,7 @@
-package PL.NHOM.QLTV.service;
+package com.example.demo.utilities;
 
-import PL.NHOM.QLTV.entity.ThanhVien;
-import PL.NHOM.QLTV.repository.ThanhVienRepository;
+import com.example.demo.entity.ThanhVien;
+import com.example.demo.repository.ThanhVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

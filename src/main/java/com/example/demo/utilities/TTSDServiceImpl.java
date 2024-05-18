@@ -1,7 +1,7 @@
-package PL.NHOM.QLTV.service;
+package com.example.demo.utilities;
 
-import PL.NHOM.QLTV.entity.ThietBi;
-import PL.NHOM.QLTV.repository.TTSDRepository;
+import com.example.demo.entity.ThietBi;
+import com.example.demo.repository.TTSDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

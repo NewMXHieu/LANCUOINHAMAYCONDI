@@ -1,7 +1,7 @@
-package PL.NHOM.QLTV.repository;
+package com.example.demo.repository;
 
-import PL.NHOM.QLTV.entity.ThietBi;
-import PL.NHOM.QLTV.entity.ThongTinSD;
+import com.example.demo.entity.ThietBi;
+import com.example.demo.entity.ThongTinSD;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

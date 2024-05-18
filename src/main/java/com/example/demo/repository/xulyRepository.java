@@ -1,6 +1,6 @@
-package PL.NHOM.QLTV.repository;
+package com.example.demo.repository;
 
-import PL.NHOM.QLTV.entity.xuly;
+import com.example.demo.entity.xuly;
 import org.springframework.data.repository.CrudRepository;
 
 public interface xulyRepository extends CrudRepository<xuly,Integer> {
