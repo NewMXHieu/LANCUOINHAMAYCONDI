@@ -27,7 +27,8 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public List<ThanhVien> searchList(String keyword) {
-        return thanhVienRepository.findByTenContaining(keyword);
+        return null;
+//        thanhVienRepository.findByTenContaining(keyword);
     }
 
     @Override
@@ -42,12 +43,14 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public ThanhVien getByMaTV(Integer id) {
-        return thanhVienRepository.getByMaTV(id);
+        return null;
+//        thanhVienRepository.getByMaTV(id);
     }
 
     @Override
     public boolean existsByMaTVAndPassword(int id, String password) {
-        return thanhVienRepository.existsByMaTVAndPassword(id, password);
+        return true;
+//        thanhVienRepository.existsByMaTVAndPassword(id, password);
     }
 
 }
