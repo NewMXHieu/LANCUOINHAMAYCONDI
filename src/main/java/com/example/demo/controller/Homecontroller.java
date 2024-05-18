@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.math.BigInteger;
 import java.util.*;
-
-import com.example.demo.entity.*;
 
 @Controller
 public class Homecontroller {
@@ -26,7 +23,7 @@ public class Homecontroller {
     @Autowired
     private ThanhVienRepository thanhVienRepository;
 
-    @GetMapping("/login")
+    @GetMapping({"","/","/login"})
     public String LoginPage() {
         return "login";
     }
@@ -49,7 +46,7 @@ public class Homecontroller {
 
 
 //    thanhvien
-    @GetMapping({"","/","/qlthanhvien"})
+    @GetMapping("/qlthanhvien")
     public String qltvPage(Model model) {
 //    List<ThanhVien> memberList = ThanhVienRepository.findAll();
 //    model.addAttribute("memberList", memberList);
@@ -94,7 +91,7 @@ public class Homecontroller {
                 return map;
             }
             // Kiểm tra xem mã thành viên, email, số điện thoại và tên thành viên có tồn tại hay không
-            ThanhVien existMaTV = thanhVienRepository.findByMaTV(maTV);
+            ThanhVien existMaTV = thanhVienRepository.getByMaTV(maTV);
             ThanhVien exitsEmail = thanhVienRepository.findByEmail(email);
             ThanhVien exitsPhone = thanhVienRepository.findBySdt(sdt);
 
@@ -146,7 +143,7 @@ public class Homecontroller {
 
             List<String> failedToDelete = new ArrayList<>();
             for (Integer maTV : maTVList) {
-                ThanhVien thanhVien = thanhVienRepository.findByMaTV(maTV);
+                ThanhVien thanhVien = thanhVienRepository.getByMaTV(maTV);
                 if (thanhVien == null) {
                     failedToDelete.add(maTV.toString());
                 } else {
@@ -204,7 +201,7 @@ public class Homecontroller {
             map.put("message", "Email không đúng định dạng");
             return map;
         }
-        ThanhVien existingMemberByMaTV = thanhVienRepository.findByMaTV(maTV);
+        ThanhVien existingMemberByMaTV = thanhVienRepository.getByMaTV(maTV);
         if (existingMemberByMaTV == null) {
             map.put("message", "Không tìm thấy thành viên với mã " + maTV);
             map.put("success", false);

@@ -399,16 +399,16 @@
             },
             body: JSON.stringify(newMemberData),
         })
-        .then((res) => res.json())
-        .then((data) => {
-            alert(data.message);
-            if (data.success) {
-                window.location.reload();
-            }
-        })
-        .catch((error) => {
-            console.log("error: " + error);
-        });
+            .then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch((error) => {
+                console.log("error: " + error);
+            });
     });
 
 
@@ -439,26 +439,26 @@
                 },
                 body: JSON.stringify(maTVList)
             })
-            .then(function(response) {
-                return response.json().then(function(data) {
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Xóa thành viên thất bại.');
+                .then(function(response) {
+                    return response.json().then(function(data) {
+                        if (!response.ok) {
+                            throw new Error(data.message || 'Xóa thành viên thất bại.');
+                        }
+                        return data;
+                    });
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        alert('Xóa thành viên thành công.');
+                        location.reload(); // Cập nhật danh sách thành viên sau khi xóa thành công
+                    } else {
+                        alert('Xóa thành viên thất bại: ' + data.message);
                     }
-                    return data;
+                })
+                .catch(function(error) {
+                    console.error('Lỗi xảy ra khi xóa thành viên:', error);
+                    alert('Lỗi xảy ra khi xóa thành viên: ' + error.message);
                 });
-            })
-            .then(function(data) {
-                if (data.success) {
-                    alert('Xóa thành viên thành công.');
-                    location.reload(); // Cập nhật danh sách thành viên sau khi xóa thành công
-                } else {
-                    alert('Xóa thành viên thất bại: ' + data.message);
-                }
-            })
-            .catch(function(error) {
-                console.error('Lỗi xảy ra khi xóa thành viên:', error);
-                alert('Lỗi xảy ra khi xóa thành viên: ' + error.message);
-            });
         }
     }
     /*]]>*/
@@ -467,32 +467,32 @@
 <script>
     var searchInput = document.getElementById("searchInput");
 
-searchInput.addEventListener("keydown", function(event) {
-if (event.keyCode === 13) { // Check if the Enter key is pressed
-  event.preventDefault(); // Prevent the default behavior
+    searchInput.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) { // Check if the Enter key is pressed
+            event.preventDefault(); // Prevent the default behavior
 
-  var searchValue = searchInput.value.trim(); // Get the search value and trim whitespace
+            var searchValue = searchInput.value.trim(); // Get the search value and trim whitespace
 
-  var endpoint = searchValue ? "/searchMember" : "/getAllMembers"; // Choose endpoint based on input
+            var endpoint = searchValue ? "/searchMember" : "/getAllMembers"; // Choose endpoint based on input
 
-  var searchData = {
-    searchValue: searchValue,
-  };
+            var searchData = {
+                searchValue: searchValue,
+            };
 
-  fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(searchData),
-  })
-  .then((res) => res.json())
-  .then((data) => {
-    document.getElementById("memberList").innerHTML = ""; // Clear previous results
+            fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(searchData),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    document.getElementById("memberList").innerHTML = ""; // Clear previous results
 
-    data.forEach(function(member) {
-      var tr = document.createElement("tr");
-      tr.innerHTML = `
+                    data.forEach(function(member) {
+                        var tr = document.createElement("tr");
+                        tr.innerHTML = `
         <td class="centered-cell"><input id="checkbox" type="checkbox" value="${member.maTV}"></td>
         <td class="centered-cell">${member.maTV}</td>
         <td class="centered-cell">${member.hoTen}</td>
@@ -508,57 +508,57 @@ if (event.keyCode === 13) { // Check if the Enter key is pressed
         <td class="centered-cell">${member.email}</td>
         <td class="centered-cell" style="color:green"><strong>Hoạt Động</strong></td>
       `;
-      document.getElementById("memberList").appendChild(tr);
+                        document.getElementById("memberList").appendChild(tr);
+                    });
+
+                    searchReload(); // If you have a function to reload certain elements
+                })
+                .catch((error) => {
+                    console.log("error: " + error);
+                });
+        }
     });
 
-    searchReload(); // If you have a function to reload certain elements
-  })
-  .catch((error) => {
-    console.log("error: " + error);
-  });
-}
-});
-
-// Function to toggle password visibility
-function togglePasswordVisibility(event) {
-var input = event.target.previousElementSibling;
-if (input.type === "password") {
-  input.type = "text";
-} else {
-  input.type = "password";
-}
-}
+    // Function to toggle password visibility
+    function togglePasswordVisibility(event) {
+        var input = event.target.previousElementSibling;
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+    }
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('importExcelButton').addEventListener('click', function() {
-          document.getElementById('fileInput').click();
-      });
+        document.getElementById('importExcelButton').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
 
-      document.getElementById('fileInput').addEventListener('change', function() {
-          var file = this.files[0];
-          if (file) {
-              var formData = new FormData();
-              formData.append('excelBtn', file);
+        document.getElementById('fileInput').addEventListener('change', function() {
+            var file = this.files[0];
+            if (file) {
+                var formData = new FormData();
+                formData.append('excelBtn', file);
 
-              fetch('/thanhVienExcel', {
-                  method: 'POST',
-                  body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      alert('File uploaded and processed successfully');
-                  } else {
-                      alert('An error occurred: ' + data.message);
-                  }
-              })
-              .catch(error => {
-                  alert('An unexpected error occurred: ' + error.message);
-              });
-          }
-      });
-  });
+                fetch('/thanhVienExcel', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('File uploaded and processed successfully');
+                        } else {
+                            alert('An error occurred: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('An unexpected error occurred: ' + error.message);
+                    });
+            }
+        });
+    });
 </script>
 </body>
 </html>

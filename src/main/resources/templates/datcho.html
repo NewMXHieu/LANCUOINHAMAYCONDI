@@ -40,17 +40,21 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="datcho.html">
+                <a class="nav-link" href="#" th:href="@{datcho}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Trang đặt chỗ</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="user.html">
+                <a class="nav-link" href="#" th:href="@{user}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>User</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="qlthanhvien.html">
+                <a class="nav-link" href="#" th:href="@{qlthanhvien}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Admin</span></a>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -126,8 +130,8 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" th:href="@{user}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

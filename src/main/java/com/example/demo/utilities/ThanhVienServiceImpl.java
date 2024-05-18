@@ -43,10 +43,8 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public ThanhVien getByMaTV(Integer id) {
-        return null;
-//        thanhVienRepository.getByMaTV(id);
+        return thanhVienRepository.getByMaTV(id);
     }
-
     @Override
     public boolean existsByMaTVAndPassword(int id, String password) {
         return true;

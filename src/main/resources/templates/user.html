@@ -159,17 +159,17 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="datcho.html">
+                <a class="nav-link" href="#" th:href="@{datcho}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Trang đặt chỗ</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="user.html">
+                <a class="nav-link" href="#" th:href="@{user}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>User</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="qlthanhvien.html">
+                <a class="nav-link" href="#" th:href="@{qlthanhvien}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Admin</span></a>
             </li>
@@ -233,7 +233,7 @@
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                      aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="#" th:href="@{user}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
@@ -246,7 +246,7 @@
                         Activity Log
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <a class="dropdown-item" href="#" th:href="@{login}" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </a>
@@ -258,32 +258,33 @@
     </nav>
 
     <div class="container-fluid">
-    <div class="  user-info">
+    <div class="  user-info" th:if="${thanhVien != null}">
         <h2>User Information</h2>
         <div class="user-info">
             <label for="memberID">Mã thành viên:</label>
-            <p id="memberID">Mã thành viên từ cơ sở dữ liệu</p>
+            <p id="memberID" th:text="${thanhVien.maTV}"></p>
         </div>
         <div class="user-info">
             <label for="fullName">Họ và Tên:</label>
-            <p id="fullName">Họ và tên từ cơ sở dữ liệu</p>
+            <p id="fullName" th:text="${thanhVien.hoTen}"></p>
         </div>
         <div class="user-info">
             <label for="major">Tên Ngành:</label>
-            <p id="major">Tên ngành từ cơ sở dữ liệu</p>
+            <p id="major" th:text="${thanhVien.nganh}"></p>
         </div>
         <div class="user-info">
             <label for="faculty">Tên Khoa:</label>
-            <p id="faculty">Tên khoa từ cơ sở dữ liệu</p>
+            <p id="faculty" th:text="${thanhVien.khoa}"></p>
         </div>
         <div class="user-info">
             <label for="phoneNumber">Số Điện Thoại:</label>
-            <p id="phoneNumber">Số điện thoại từ cơ sở dữ liệu</p>
+            <p id="phoneNumber" th:text="${thanhVien.sdt}"></p>
         </div>
         <div class="user-info">
             <label for="email">Email:</label>
-            <p id="email">Email từ cơ sở dữ liệu</p>
+            <p id="email" th:text="${thanhVien.email}"></p>
         </div>
+
         <div class="btn-container">
             <button class="btn" onclick="showChangePasswordModal()">Đổi mật khẩu</button>
             <button class="btn" onclick="showViolationStatus()">Xem trạng thái vi phạm</button>
@@ -343,6 +344,9 @@
 
 
     </div>
+        <div th:unless="${thanhVien != null}">
+            <span>Không có thông tin thành viên.</span>
+        </div>
 </div>
     </div>
     </div>
