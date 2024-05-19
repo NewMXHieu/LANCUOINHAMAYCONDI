@@ -2,17 +2,17 @@ package com.example.demo.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.demo.repository.ThanhVienRepository;
+import com.example.demo.repository.xulyRepository;
 import com.example.demo.utilities.ExcelUtil;
 import com.example.demo.utilities.thanhVienExcelUtil;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonMixinModuleEntries;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.ThanhVien;
+import com.example.demo.entity.xuly;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -25,11 +25,10 @@ import com.example.demo.entity.*;
 @Controller
 public class Homecontroller {
 
-    private boolean isLoggedIn = false;
     @Autowired
     private ThanhVienRepository thanhVienRepository;
     @Autowired
-    private JsonMixinModuleEntries jsonMixinModuleEntries;
+    private xulyRepository xuLyRepository;
 
     @GetMapping({"","/","/login"})
     public String LoginPage() {
@@ -44,13 +43,7 @@ public class Homecontroller {
         return "Quenmatkhau";
     }
     @GetMapping("/user")
-    public String userPage(HttpSession session, Model model) {
-        if (!isLoggedIn || session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login"; // Chuyển hướng nếu chưa đăng nhập
-        }
-        // Hiển thị trang người dùng nếu đã đăng nhập
-        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
-        model.addAttribute("thanhVien", thanhVien);
+    public String userPage() {
         return "user";
     }
     @GetMapping("/datcho")
@@ -69,7 +62,7 @@ public class Homecontroller {
 
 
 //add thanhvien
-    @PostMapping("/themThanhVien")
+    @PostMapping(name = "/themThanhVien")
     @ResponseBody
     public Map<String, Object> themTV(@RequestBody Map<String, String> thanhVien) {
         Map<String, Object> map = new HashMap<>();
@@ -304,7 +297,9 @@ public class Homecontroller {
         return "quanlytb";
     }
     @GetMapping("/xulyvp")
-    public String xlvpPage() {
+    public String xlvpPage(Model model) {
+        List<xuly> xulyList = xuLyRepository.findAll();
+        model.addAttribute("xulyList", xulyList);
         return "xulyvp";
     }
     @GetMapping("/thongke")
@@ -318,22 +313,10 @@ public class Homecontroller {
         return "redirect:/login";
     }
     @PostMapping("/login")
-    public String loginSuccess(@RequestParam("username") String username,
-                               @RequestParam("password") String password,
-                               HttpSession session) {
-        try {
-            int maTV = Integer.parseInt(username); // Chuyển đổi username thành int
-            ThanhVien thanhVien = thanhVienRepository.findByMaTVAndPassword(maTV, password);
-            if (thanhVien != null) {
-                session.setAttribute("loggedInUser", thanhVien); // Lưu thông tin người dùng đã đăng nhập vào session
-                isLoggedIn = true;
-                return "redirect:/user";
-            } else {
-                return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
-            }
-        } catch (NumberFormatException e) {
-            return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
-        }
+    public String loginSuccess() {
+        // Xử lý logic đăng nhập thành công ở đây
+        // Sau khi đăng nhập thành công, chuyển hướng về trang "user"
+        return "redirect:/user";
     }
 /*    int id = -1;
     @Autowired

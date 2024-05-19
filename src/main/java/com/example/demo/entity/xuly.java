@@ -1,76 +1,90 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "xuly")
 
 public class xuly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int MaXL;
-    @Column(nullable = false, length = 10)
-    private int MaTV;
+    @Column(name = "MaXL",nullable = false, unique = true, insertable = true)
+    private int maXL;
+    @Column(name = "MaTV")
+    private int maTV;
 
-    @Column(nullable = false, length = 250)
-    private String HinhThucXL;
+    @Column(name = "HinhThucXL")
+    private String hinhThucXL;
 
-    @Column(nullable = false, length = 100)
-    private Integer  SoTien;
+    @Column(name = "SoTien")
+    private Integer  soTien;
 
-    @Column
-    private Date NgayXL;
+    @Column(name = "NgayXL")
+    private String ngayXL;
 
-    @Column(nullable = false, length = 2)
-    private int TrangThaiXL;
+    @Column (name = "TrangThaiXL")
+    private Integer trangThaiXL;
 
     public int getMaXL() {
-        return MaXL;
+        return maXL;
     }
 
     public void setMaXL(int maXL) {
-        MaXL = maXL;
+        maXL = maXL;
     }
 
     public int getMaTV() {
-        return MaTV;
+        return maTV;
     }
 
     public void setMaTV(int maTV) {
-        MaTV = maTV;
+        maTV = maTV;
     }
 
     public String getHinhThucXL() {
-        return HinhThucXL;
+        return hinhThucXL;
     }
 
     public void setHinhThucXL(String hinhThucXL) {
-        HinhThucXL = hinhThucXL;
+        hinhThucXL = hinhThucXL;
     }
 
     public Integer getSoTien() {
-        return SoTien;
+        return soTien;
     }
 
     public void setSoTien(Integer soTien) {
-        SoTien = soTien;
+        soTien = soTien;
     }
 
-    public Date getNgayXL() {
-        return NgayXL;
+    public String getNgayXL() {
+        return ngayXL;
     }
 
-    public void setNgayXL(Date ngayXL) {
-        NgayXL = ngayXL;
+    public void setNgayXL(String ngayXL) {
+        ngayXL = ngayXL;
     }
 
     public int getTrangThaiXL() {
-        return TrangThaiXL;
+        return trangThaiXL;
     }
 
     public void setTrangThaiXL(int trangThaiXL) {
-        TrangThaiXL = trangThaiXL;
+        trangThaiXL = trangThaiXL;
+    }
+    public xuly() {
+    }
+    public xuly(int maXL, int maTV, String hinhThucXL, int soTien, String ngayXL, int trangThaiXL){
+        this.maXL = maXL;
+        this.maTV = maTV;
+        this.hinhThucXL = hinhThucXL;
+        this.soTien = soTien;
+        this.ngayXL = ngayXL;
+        this.trangThaiXL = trangThaiXL;
     }
 }
