@@ -159,13 +159,6 @@
     cursor: pointer;
     float: right;
 }
-#updateTvForm, #addTvForm {
-    background: #f8f9fc;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
 
 #addMemberButton{
     background-color: #28a745;
@@ -179,15 +172,6 @@
     margin-right: 10px; /* Khoảng cách giữa các nút */
 }
 
-/* Điều chỉnh kích thước của form */
-#updateTvForm, #addTvForm {
-    max-width: 400px; /* Đặt kích thước tối đa của form */
-    margin: 0 auto; /* Canh giữa form */
-    padding: 20px; /* Tăng khoảng cách giữa các phần tử bên trong form */
-    background-color: #fff; /* Màu nền của form */
-    border-radius: 5px; /* Bo tròn góc của form */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
-}
 
 /* Điều chỉnh kích thước của các input trong form */
 #updateTvForm input,
@@ -204,7 +188,7 @@
     cursor: pointer;
 }
 /* Điều chỉnh kích thước của form */
-#updateTvForm, #addTvForm {
+#addTvForm {
     max-width: 400px; /* Đặt kích thước tối đa của form */
     margin: 0 auto; /* Canh giữa form */
     padding: 20px; /* Tăng khoảng cách giữa các phần tử bên trong form */
@@ -212,8 +196,8 @@
     border-radius: 5px; /* Bo tròn góc của form */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
     position: absolute; /* Đặt vị trí tuyệt đối */
-    top: 50%; /* Đặt top ở giữa màn hình */
-    left: 50%; /* Đặt left ở giữa màn hình */
+    top: 60%;
+    left: 50%;
     transform: translate(-50%, -50%); /* Dịch chuyển form điều chỉnh để nó nằm chính giữa màn hình */
     z-index: 9999; /* Đặt z-index cao hơn layout gốc */
 }

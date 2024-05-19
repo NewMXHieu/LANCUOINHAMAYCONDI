@@ -212,7 +212,7 @@
                                     <td class="centered-cell" th:text="${member.sdt}"></td>
                                     <td class="centered-cell">
                                         <div class="password-container">
-                                            <input type="password" class="password-input" th:value="${member.password}" readonly>
+                                            <input type="password" id="passWord1" class="password-input" th:value="${member.password}" readonly autocomplete="current-password">
                                             <!-- Displaying password for demonstration purposes, consider security implications -->
                                             <span class="toggle-password" onclick="togglePasswordVisibility(event)">👁️</span>
                                         </div>
@@ -234,36 +234,37 @@
                             <form id="updateTvFormContent">
                                 <div class="form-group">
                                     <label for="maThanhVien">Mã Thành Viên:</label>
-                                    <input type="text" class="form-control" id="maThanhVien" placeholder="Nhập mã thành viên">
+                                    <input type="text" class="form-control" id="maThanhVien" placeholder="Nhập mã thành viên" autocomplete="off">
                                 </div>
                                 <div class="form-group">
                                     <label for="hoTen">Tên Thành Viên:</label>
-                                    <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên">
+                                    <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên" autocomplete="name">
                                 </div>
                                 <div class="form-group">
                                     <label for="khoa">Khoa:</label>
-                                    <input type="text" class="form-control" id="khoa" placeholder="Nhập khoa">
+                                    <input type="text" class="form-control" id="khoa" placeholder="Nhập khoa" autocomplete="organization">
                                 </div>
                                 <div class="form-group">
                                     <label for="nganh">Ngành:</label>
-                                    <input type="text" class="form-control" id="nganh" placeholder="Nhập ngành">
+                                    <input type="text" class="form-control" id="nganh" placeholder="Nhập ngành" autocomplete="organization">
                                 </div>
                                 <div class="form-group">
                                     <label for="sdt">SDT:</label>
-                                    <input type="text" class="form-control" id="sdt" placeholder="Nhập số điện thoại">
+                                    <input type="text" class="form-control" id="sdt" placeholder="Nhập số điện thoại" autocomplete="tel">
                                 </div>
                                 <label for="passWord">PassWord:</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="passWord" placeholder="Nhập mật khẩu">
+                                    <input type="text" class="form-control" id="passWord" placeholder="Nhập mật khẩu" autocomplete="current-password">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                            <i class="fas fa-eye" id="eyeIcon"></i>
+                                            <i class="fas fa-eye toggle-icon" id="eyeIcon"></i>
                                         </button>
                                     </div>
-                                </div>                                    <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" placeholder="Nhập email">
-                            </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Nhập email" autocomplete="email">
+                                </div>
                                 <button type="submit" id="save-btn" class="btn btn-primary">Lưu</button>
                             </form>
                         </div>
@@ -529,36 +530,6 @@ if (input.type === "password") {
 }
 }
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('importExcelButton').addEventListener('click', function() {
-          document.getElementById('fileInput').click();
-      });
 
-      document.getElementById('fileInput').addEventListener('change', function() {
-          var file = this.files[0];
-          if (file) {
-              var formData = new FormData();
-              formData.append('excelBtn', file);
-
-              fetch('/thanhVienExcel', {
-                  method: 'POST',
-                  body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      alert('File uploaded and processed successfully');
-                  } else {
-                      alert('An error occurred: ' + data.message);
-                  }
-              })
-              .catch(error => {
-                  alert('An unexpected error occurred: ' + error.message);
-              });
-          }
-      });
-  });
-</script>
 </body>
 </html>
