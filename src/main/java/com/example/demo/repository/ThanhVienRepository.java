@@ -12,6 +12,7 @@
         ThanhVien findByMaTV(int maTV);
         ThanhVien findByEmail(String email);
         ThanhVien findBySdt(String sdt);
+        ThanhVien findByMaTVAndPassword(int maTV, String password);
         ThanhVien findByHoTen(String hoTen);
         ThanhVien findByHoTenContainingIgnoreCase(String hoTen);
 

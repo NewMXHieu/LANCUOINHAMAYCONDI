@@ -7,6 +7,8 @@ import com.example.demo.utilities.ExcelUtil;
 import com.example.demo.utilities.thanhVienExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.boot.jackson.JsonMixinModuleEntries;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +26,16 @@ import com.example.demo.entity.*;
 
 @Controller
 public class Homecontroller {
+    private boolean isLoggedIn = false;
 
     @Autowired
     private ThanhVienRepository thanhVienRepository;
     @Autowired
+    private JsonMixinModuleEntries jsonMixinModuleEntries;
+    @Autowired
     private xulyRepository xuLyRepository;
 
-    @GetMapping({"","/","/login"})
+    @GetMapping("/login")
     public String LoginPage() {
         return "login";
     }
@@ -43,9 +48,16 @@ public class Homecontroller {
         return "Quenmatkhau";
     }
     @GetMapping("/user")
-    public String userPage() {
+    public String userPage(HttpSession session, Model model) {
+        if (!isLoggedIn || session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login"; // Chuyển hướng nếu chưa đăng nhập
+        }
+        // Hiển thị trang người dùng nếu đã đăng nhập
+        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+        model.addAttribute("thanhVien", thanhVien);
         return "user";
     }
+
     @GetMapping("/datcho")
     public String datchoPage() {
         return "datcho";
@@ -53,7 +65,7 @@ public class Homecontroller {
 
 
 //    thanhvien
-    @GetMapping({"","/","/qlthanhvien"})
+    @GetMapping("/qlthanhvien")
     public String qltvPage(Model model) {
         List<ThanhVien> memberList = thanhVienRepository.findAll();
         model.addAttribute("memberList", memberList);
@@ -323,10 +335,24 @@ public class Homecontroller {
         return "redirect:/login";
     }
     @PostMapping("/login")
-    public String loginSuccess() {
-        // Xử lý logic đăng nhập thành công ở đây
-        // Sau khi đăng nhập thành công, chuyển hướng về trang "user"
-        return "redirect:/user";
+    public String loginSuccess(@RequestParam("username") String username,
+                               @RequestParam("password") String password,
+                               HttpSession session) {
+        try {
+            // Tìm kiếm thành viên dựa trên mã thành viên (username)
+            int maTV = Integer.parseInt(username); // Chuyển đổi username thành int
+            ThanhVien thanhVien = thanhVienRepository.findByMaTVAndPassword(maTV, password);
+            if (thanhVien != null) {
+                session.setAttribute("loggedInUser", thanhVien); // Lưu thông tin người dùng đã đăng nhập vào session
+                isLoggedIn = true;
+                return "redirect:/user";
+            } else {
+                return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
+
+            }
+        } catch (NumberFormatException e) {
+            return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
+        }
     }
 /*    int id = -1;
     @Autowired
