@@ -290,16 +290,50 @@
             <button class="btn" onclick="showBorrowedDevicesTable()">Xem hồ sơ mượn thiết bị</button>
 
             <div id="changePasswordModal" class="modal">
-                <div class="modal-content">
-                    <!-- Nội dung của bảng đổi mật khẩu -->
-                    <span class="close" onclick="closeChangePasswordModal()">&times;</span>
-                    <h2>Đổi mật khẩu</h2>
-                    <!-- Các trường nhập mới mật khẩu và xác nhận mật khẩu -->
-                    <input type="password" id="newPassword" placeholder="Mật khẩu mới"><br>
-                    <input type="password" id="confirmPassword" placeholder="Xác nhận mật khẩu"><br>
-                    <!-- Nút lưu hoặc đổi mật khẩu -->
-                    <button id="savePasswordBtn">Lưu mật khẩu</button>
-                </div>
+                <form action="/changePassword" method="post" id="changePassword">
+                    <div class="modal-content">
+                        <!-- Nội dung của bảng đổi mật khẩu -->
+                        <span class="close" onclick="closeChangePasswordModal()">&times;</span>
+                        <h2>Đổi mật khẩu</h2>
+                        <!-- Các trường nhập mới mật khẩu và xác nhận mật khẩu -->
+                        <input type="password" id="newPassword" name="newPassword" placeholder="Mật khẩu mới"><br>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu"><br>
+                        <!-- Nút lưu hoặc đổi mật khẩu -->
+                        <button id="savePasswordBtn">Lưu mật khẩu</button>
+                    </div>
+                </form>
+                <!-- jQuery -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <!-- Script xử lý đổi mật khẩu -->
+                <script>
+                    $(document).ready(function() {
+                        $("#savePasswordBtn").click(function() {
+                            var newPassword = $("#newPassword").val();
+                            var confirmPassword = $("#confirmPassword").val();
+
+                            // Gửi yêu cầu đổi mật khẩu bằng ajax
+                            $.ajax({
+                                type: "POST",
+                                url: "/changePassword",
+                                data: {
+                                    newPassword: newPassword,
+                                    confirmPassword: confirmPassword
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        window.location.href = "/user";
+                                    } else {
+                                        alert(response.message);
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    alert("Đã xảy ra lỗi: " + error);
+                                }
+                            });
+                        });
+                    });
+                </script>
+
             </div>
             <div id="violationStatusTable" class="modal" style="display: none;">
                 <div class="modal-content">
@@ -335,13 +369,19 @@
                         </thead>
                         <tbody id="borrowedDevicesTableBody">
                         <!-- Dữ liệu của bảng sẽ được thêm vào đây -->
+                        <tr th:each="ttsd : ${ttsds}">
+                            <td class="centered-cell" th:text="${ttsd.maTT}"></td>
+                            <td class="centered-cell" th:text="${ttsd.tgDatCho}"></td>
+                            <td class="centered-cell" th:text="${ttsd.tgMuon}"></td>
+                            <td class="centered-cell" th:text="${ttsd.tgTra}"></td>
+                            <td class="centered-cell" th:text="${ttsd.tgVao}"></td>
+                            <td class="centered-cell" th:text="${ttsd.thietBi.getTenTB()}">
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
     </div>
