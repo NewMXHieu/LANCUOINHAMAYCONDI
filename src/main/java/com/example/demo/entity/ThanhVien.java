@@ -49,21 +49,68 @@ public class ThanhVien {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "ThanhVien{" +
-                "maTV=" + maTV +
-                ", hoTen='" + hoTen + '\'' +
-                ", khoa='" + khoa + '\'' +
-                ", nganh='" + nganh + '\'' +
-                ", sdt='" + sdt + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", thongTinSD=" + thongTinSD +
-                '}';
+    public int getMaTV() {
+        return maTV;
     }
+
+    public void setMaTV(int maTV) {
+        this.maTV = maTV;
+    }
+
+    public String getHoTen() {
+        return hoTen;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public String getKhoa() {
+        return khoa;
+    }
+
+    public void setKhoa(String khoa) {
+        this.khoa = khoa;
+    }
+
+    public String getNganh() {
+        return nganh;
+    }
+
+    public void setNganh(String nganh) {
+        this.nganh = nganh;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
     public String getPassword() {
-        return this.password;
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<ThongTinSD> getThongTinSD() {
+        return thongTinSD;
+    }
+
+    public void setThongTinSD(List<ThongTinSD> thongTinSD) {
+        this.thongTinSD = thongTinSD;
     }
 }
 

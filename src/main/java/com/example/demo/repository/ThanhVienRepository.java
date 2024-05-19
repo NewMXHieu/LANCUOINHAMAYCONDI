@@ -10,6 +10,7 @@
     @Repository
     public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer> {
         ThanhVien findByMaTV(int maTV);
+        ThanhVien findByMaTVAndPassword(int maTV, String password);
         ThanhVien findByEmail(String email);
         ThanhVien findBySdt(String sdt);
         ThanhVien findByHoTen(String hoTen);
@@ -25,7 +26,4 @@
                 "OR tv.email LIKE CONCAT('%', :keyword, '%')")
 
         List<ThanhVien> findByKeyword(String keyword);
-
-
-
     }

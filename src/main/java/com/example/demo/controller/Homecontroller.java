@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.demo.repository.ThanhVienRepository;
 import com.example.demo.utilities.ExcelUtil;
 import com.example.demo.utilities.thanhVienExcelUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonMixinModuleEntries;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,11 @@ import com.example.demo.entity.*;
 @Controller
 public class Homecontroller {
 
+    private boolean isLoggedIn = false;
     @Autowired
     private ThanhVienRepository thanhVienRepository;
+    @Autowired
+    private JsonMixinModuleEntries jsonMixinModuleEntries;
 
     @GetMapping({"","/","/login"})
     public String LoginPage() {
@@ -39,7 +44,13 @@ public class Homecontroller {
         return "Quenmatkhau";
     }
     @GetMapping("/user")
-    public String userPage() {
+    public String userPage(HttpSession session, Model model) {
+        if (!isLoggedIn || session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login"; // Chuyển hướng nếu chưa đăng nhập
+        }
+        // Hiển thị trang người dùng nếu đã đăng nhập
+        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+        model.addAttribute("thanhVien", thanhVien);
         return "user";
     }
     @GetMapping("/datcho")
@@ -308,27 +319,19 @@ public class Homecontroller {
     @PostMapping("/login")
     public String loginSuccess(@RequestParam("username") String username,
                                @RequestParam("password") String password,
-                               Model model) {
+                               HttpSession session) {
         try {
-            // Tìm kiếm thành viên dựa trên mã thành viên (username)
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
-            ThanhVien thanhVien = thanhVienRepository.findByMaTV(Integer.parseInt(username));
-
-            // Kiểm tra xem thành viên có tồn tại và mật khẩu có đúng không
-            if (thanhVien != null && password.equals(thanhVien.getPassword())) {
-                // Đăng nhập thành công, thêm thành viên vào model
-                model.addAttribute("thanhVien", thanhVien);
-                return "redirect:/user"; // Trả về view "user"
+            int maTV = Integer.parseInt(username); // Chuyển đổi username thành int
+            ThanhVien thanhVien = thanhVienRepository.findByMaTVAndPassword(maTV, password);
+            if (thanhVien != null) {
+                session.setAttribute("loggedInUser", thanhVien); // Lưu thông tin người dùng đã đăng nhập vào session
+                isLoggedIn = true;
+                return "redirect:/user";
             } else {
-                // Đăng nhập thất bại, thông báo lỗi
-                model.addAttribute("error", "Mã Thành Viên hoặc Mật khẩu không đúng");
-                return "login"; // Trở lại trang login
+                return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
             }
         } catch (NumberFormatException e) {
-            // Nếu username không phải là số, thông báo lỗi
-            model.addAttribute("error", "Mã Thành Viên phải là số");
-            return "login";
+            return "redirect:/login"; // Trả về trang đăng nhập với thông báo lỗi
         }
     }
 /*    int id = -1;
