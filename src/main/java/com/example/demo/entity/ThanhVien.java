@@ -48,5 +48,22 @@ public class ThanhVien {
         this.password = password;
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "ThanhVien{" +
+                "maTV=" + maTV +
+                ", hoTen='" + hoTen + '\'' +
+                ", khoa='" + khoa + '\'' +
+                ", nganh='" + nganh + '\'' +
+                ", sdt='" + sdt + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", thongTinSD=" + thongTinSD +
+                '}';
+    }
+    public String getPassword() {
+        return this.password;
+    }
 }
 

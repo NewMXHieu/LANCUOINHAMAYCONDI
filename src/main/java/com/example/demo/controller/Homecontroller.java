@@ -306,10 +306,30 @@ public class Homecontroller {
         return "redirect:/login";
     }
     @PostMapping("/login")
-    public String loginSuccess() {
-        // Xử lý logic đăng nhập thành công ở đây
-        // Sau khi đăng nhập thành công, chuyển hướng về trang "user"
-        return "redirect:/user";
+    public String loginSuccess(@RequestParam("username") String username,
+                               @RequestParam("password") String password,
+                               Model model) {
+        try {
+            // Tìm kiếm thành viên dựa trên mã thành viên (username)
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
+            ThanhVien thanhVien = thanhVienRepository.findByMaTV(Integer.parseInt(username));
+
+            // Kiểm tra xem thành viên có tồn tại và mật khẩu có đúng không
+            if (thanhVien != null && password.equals(thanhVien.getPassword())) {
+                // Đăng nhập thành công, thêm thành viên vào model
+                model.addAttribute("thanhVien", thanhVien);
+                return "redirect:/user"; // Trả về view "user"
+            } else {
+                // Đăng nhập thất bại, thông báo lỗi
+                model.addAttribute("error", "Mã Thành Viên hoặc Mật khẩu không đúng");
+                return "login"; // Trở lại trang login
+            }
+        } catch (NumberFormatException e) {
+            // Nếu username không phải là số, thông báo lỗi
+            model.addAttribute("error", "Mã Thành Viên phải là số");
+            return "login";
+        }
     }
 /*    int id = -1;
     @Autowired
