@@ -26,7 +26,7 @@ public class Homecontroller {
     @Autowired
     private ThanhVienRepository thanhVienRepository;
 
-    @GetMapping("/login")
+    @GetMapping({"","/","/login"})
     public String LoginPage() {
         return "login";
     }
@@ -49,7 +49,7 @@ public class Homecontroller {
 
 
 //    thanhvien
-    @GetMapping({"","/","/qlthanhvien"})
+    @GetMapping("/qlthanhvien")
     public String qltvPage(Model model) {
     List<ThanhVien> memberList = thanhVienRepository.findAll();
     model.addAttribute("memberList", memberList);
