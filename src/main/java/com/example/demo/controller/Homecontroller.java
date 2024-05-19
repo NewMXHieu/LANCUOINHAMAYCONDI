@@ -35,7 +35,7 @@ public class Homecontroller {
     public String QuenmatkhauPage() {
         return "Quenmatkhau";
     }
-    @GetMapping("/user")
+    @GetMapping("/user#")
     public String userPage() {
         return "user";
     }

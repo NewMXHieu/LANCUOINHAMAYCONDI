@@ -9,7 +9,8 @@
 
     @Repository
     public interface ThanhVienRepository extends JpaRepository<ThanhVien, Integer> {
-        ThanhVien getByMaTV(Integer maTV);
+        ThanhVien getByMaTV(Integer id);
+        List<ThanhVien> findByHoTenContaining(String keyword);
         ThanhVien findByEmail(String email);
         ThanhVien findBySdt(String sdt);
         ThanhVien findByHoTen(String hoTen);

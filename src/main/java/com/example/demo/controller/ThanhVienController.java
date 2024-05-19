@@ -3,7 +3,9 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ThanhVien;
 import com.example.demo.repository.ThanhVienRepository;
+import com.example.demo.utilities.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,31 +17,30 @@ import java.util.List;
 @Controller
 public class ThanhVienController {
     @Autowired
-    private ThanhVienRepository ThanhVienRepository;
+    private ThanhVienService thanhVienService;
 
-    @GetMapping("/thanhvien/{maTV}")
-    public String xemChiTietThanhVien(@PathVariable("maTV") int maTV, Model model) {
-        // Gọi phương thức từ Repository hoặc Service để lấy thông tin của thành viên từ mã thành viên
-        // Ví dụ:
-        int maTVToFetch = 1120150137;
-        ThanhVien thanhVien = ThanhVienRepository.getByMaTV(maTVToFetch);
+    @GetMapping("/search")
+    public String SearchThanhVien(Model model, @Param("keyword") String keyword) {
+        List<ThanhVien> list= thanhVienService.searchList(keyword);
 
-        // Kiểm tra nếu không tìm thấy thành viên
-        if (thanhVien == null) {
-            // Xử lý khi không tìm thấy thành viên
-            return "error"; // Trả về trang lỗi
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("listThanhVien", list);
+
+        return "thanhvien/view_all_thanhvien";
+    }
+    @GetMapping("/user")
+    public String getThanhVien(Model model) {
+        // Lấy thông tin của thành viên có mã là 1
+        ThanhVien thanhVien = thanhVienService.getByMaTV(1120150137);
+
+        // Kiểm tra xem thành viên có tồn tại hay không
+        if (thanhVien != null) {
+            // Đưa thông tin của thành viên vào model để hiển thị trên giao diện
+            model.addAttribute("thanhVien", thanhVien);
+            return "user"; // Trả về view để hiển thị thông tin của thành viên
+        } else {
+            // Nếu không tìm thấy thành viên, điều hướng tới trang lỗi hoặc trang khác tùy bạn
+            return "error";
         }
-
-        // Truyền thông tin thành viên vào model để hiển thị trong View
-        model.addAttribute("thanhVien", thanhVien);
-
-        // Trả về tên của view template để hiển thị thông tin thành viên
-        return "thanhvien"; // Trả về tên của view template
     }
-    // Thêm một phương thức mới để xử lý trang lỗi
-    @GetMapping("/error")
-    public String handleError() {
-        return "error"; // Trả về trang lỗi
-    }
-
 }

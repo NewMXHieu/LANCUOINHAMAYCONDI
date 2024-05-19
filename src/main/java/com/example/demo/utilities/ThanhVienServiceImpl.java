@@ -27,8 +27,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public List<ThanhVien> searchList(String keyword) {
-        return null;
-//        thanhVienRepository.findByTenContaining(keyword);
+        return  thanhVienRepository.findByHoTenContaining(keyword);
     }
 
     @Override
