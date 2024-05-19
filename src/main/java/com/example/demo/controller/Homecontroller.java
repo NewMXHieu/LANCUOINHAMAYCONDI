@@ -50,7 +50,7 @@ public class Homecontroller {
 
 //    thanhvien
     @GetMapping("/qlthanhvien")
-    public String qltvPage(Model model) {
+    public String qltvPage() {
 //    List<ThanhVien> memberList = ThanhVienRepository.findAll();
 //    model.addAttribute("memberList", memberList);
     return "qlthanhvien";
