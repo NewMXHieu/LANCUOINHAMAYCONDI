@@ -94,10 +94,10 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Nhập tên thành viên..."
+                            <input type="text" class="form-control bg-light border-0 small" id="searchData" placeholder="Nhập mã thành viên..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" id = "searchVP" type="button">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -193,95 +193,19 @@
                                             <th class="centered-cell">Trạng Thái Xử Lý</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">01</td>
-                                        <td class="centered-cell">10</td>
-                                        <td class="centered-cell">1121110001</td>
-                                        <td class="centered-cell">Khóa thẻ 1 tháng</td>
-                                        <td class="centered-cell"></td>
-                                        <td class="centered-cell">2/1/24 10:00</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
-                                    </tr>
+                                    <tbody id="xulyList">
 
-                                    <tr>
+                                    <tr th:each ="row, state: ${xulyList}" th:switch = "${row.TrangThaiXL}" >
                                         <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">02</td>
-                                        <td class="centered-cell">11</td>
-                                        <td class="centered-cell">1121130012</td>
-                                        <td class="centered-cell">Khóa thẻ 1 tháng</td>
-                                        <td class="centered-cell"></td>
-                                        <td class="centered-cell">2/2/24 10:59</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
+                                        <td class="centered-cell" th:utext = "${state.count}"></td>
+                                        <td class="centered-cell" th:utext="${row.MaXL}"></td>
+                                        <td class="centered-cell" th:utext="${row.MaTV}"></td>
+                                        <td class="centered-cell" th:utext="${row.HinhThucXL}"></td>
+                                        <td class="centered-cell" th:utext="${row.SoTien}"></td>
+                                        <td class="centered-cell" th:utext="${row.NgayXL}"></td>
+                                        <td class="centered-cell" th:case="0" style="color:red"><strong>Chưa xử lý</strong></td>
+                                        <td class="centered-cell" th:case="1" style="color:green"><strong>Đã xử lý</strong></td>
                                     </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">03</td>
-                                        <td class="centered-cell">12</td>
-                                        <td class="centered-cell">1121100003</td>
-                                        <td class="centered-cell">Khóa thẻ 1 tháng</td>
-                                        <td class="centered-cell"></td>
-                                        <td class="centered-cell">2/3/24 10:58</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">04</td>
-                                        <td class="centered-cell">13</td>
-                                        <td class="centered-cell">1120380064</td>
-                                        <td class="centered-cell">Khóa thẻ 2 tháng</td>
-                                        <td class="centered-cell"></td>
-                                        <td class="centered-cell">3/4/24 10:58</td>
-                                        <td class="centered-cell" style="color:red"><strong>Đang Xử Lý</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">05</td>
-                                        <td class="centered-cell">14</td>
-                                        <td class="centered-cell">1121110001</td>
-                                        <td class="centered-cell">Bồi thường</td>
-                                        <td class="centered-cell">300000</td>
-                                        <td class="centered-cell">3/5/24 10:58</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">06</td>
-                                        <td class="centered-cell">15</td>
-                                        <td class="centered-cell">1121130012</td>
-                                        <td class="centered-cell">Bồi thường</td>
-                                        <td class="centered-cell">200000</td>
-                                        <td class="centered-cell">3/6/24 10:58</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">07</td>
-                                        <td class="centered-cell">16</td>
-                                        <td class="centered-cell">1121100003</td>
-                                        <td class="centered-cell">Khóa thẻ 1 tháng và bồi thường</td>
-                                        <td class="centered-cell">100000</td>
-                                        <td class="centered-cell">3/7/24 10:58</td>
-                                        <td class="centered-cell" style="color:green"><strong>Hoàn Tất Xử Lý</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="centered-cell"><input type="checkbox"></td>
-                                        <td class="centered-cell">08</td>
-                                        <td class="centered-cell">18</td>
-                                        <td class="centered-cell">11220900010</td>
-                                        <td class="centered-cell">Khóa thẻ 2 tháng</td>
-                                        <td class="centered-cell"></td>
-                                        <td class="centered-cell">3/9/24 10:58</td>
-                                        <td class="centered-cell" style="color:red"><strong>Đang Xử Lý</strong></td>
-                                    </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -296,12 +220,12 @@
                                 <button id="closeFormButton" class="btn-close">X</button>
                                 <form id="upTbButtonContent">
                                     <div class="form-group">
-                                        <label for="maThanhVien">Mã Xử Lý</label>
-                                        <input type="text" class="form-control" id="maTvien" placeholder="Nhập mã thành viên">
+                                        <label for="maXL">Mã Xử Lý</label>
+                                        <input type="text" class="form-control" id="maXL" placeholder="Nhập mã xử lý" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label for="hoTen">Mã Thành Viên</label>
-                                        <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ tên">
+                                        <label for="maTV">Mã Thành Viên</label>
+                                        <input type="text" class="form-control" id="maTV" placeholder="Nhập mã thành viên">
                                     </div>
                                     <div class="form-group">
                                         <label for="hinhThucxl">Hình Thức Xử Lý</label>
@@ -313,7 +237,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="ngayXuLyvp">Ngày Xử Lý</label>
-                                        <input type="text" class="form-control" id="ngayXuLyvp" placeholder="Nhập ngày xử lý">
+                                        <input type="datetime-local" class="form-control" id="ngayXuLyvp" placeholder="Nhập ngày xử lý">
                                     </div>
                                     <div class="form-group">
                                         <label for="tinhTrangxl">Tình Trạng</label>
@@ -322,7 +246,7 @@
                                             <option value="sanSang">Đang Xử Ly</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    <button type="button" id="updateBtn" class="btn btn-primary">Lưu</button>
                                 </form>
                                 
                             </div>
@@ -347,7 +271,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="ngayXuLy">Ngày Xử Lý</label>
-                                        <input type="text" class="form-control" id="ngayXuLy" placeholder="Nhập ngày xử lý">
+                                        <input type="datetime-local" class="form-control" id="ngayXuLy" placeholder="Nhập ngày xử lý">
                                     </div>
                                     <div class="form-group">
                                         <label for="tinhTrang">Trạng Thái Xử Lý</label>
@@ -357,7 +281,7 @@
                                         </select>
                                     </div>
                                     <!-- Thay nút "Lưu" thành nút "Thêm" -->
-                                    <button type="submit" class="btn btn-primary">Thêm</button>
+                                    <button type="button" id="addBtn" class="btn btn-primary">Thêm</button>
                                 </form>
                             </div>
                         </div>
@@ -406,7 +330,166 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("addBtn").addEventListener("click", () => {
+            let maXL = document.querySelector("#maXuLy").value;
+            let maTV = document.querySelector("#maThanhVien").value;
+            let hinhThuc = document.querySelector("#hinhThuc").value;
+            let tien = document.querySelector("#soTien").value;
+            let date = document.querySelector("#ngayXuLy").value;
+            let status = document.querySelector("#tinhTrang").value;
 
+            let viPham = {
+                maXL: maXL,
+                maTV: maTV,
+                hinhThuc: hinhThuc,
+                tien: tien,
+                date: date,
+                status: status,
+            };
+            console.log(viPham);
+            fetch("/themvp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(viPham),
+            })
+
+            .then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch((error) => {
+                console.log("error: " + error);
+            });
+        });
+    </script>
+    <script>
+        document.getElementById("updateBtn").addEventListener("click", () => {
+            let maXL = document.querySelector("#maXL").value;
+            let maTV = document.querySelector("#maTV").value;
+            let hinhThuc = document.querySelector("#hinhThucxl").value;
+            let tien = document.querySelector("#soTienPhat").value;
+            let date = document.querySelector("#ngayXuLyvp").value;
+            let status = document.querySelector("#tinhTrangxl").value;
+
+            let viPham = {
+                maXL: maXL,
+                maTV: maTV,
+                hinhThuc: hinhThuc,
+                tien: tien,
+                date: date,
+                status: status,
+            };
+            console.log(viPham);
+            fetch("/suavp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(viPham),
+            })
+
+            .then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch((error) => {
+                console.log("error: " + error);
+            });
+        });
+    </script>
+    <script>
+        var searchInput = document.getElementById("searchData");
+        document.getElementById("searchVP").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior
+        var searchValue = searchInput.value.trim();
+        var searchData = {
+            searchValue: searchValue,
+        };
+        document.getElementById("xulyList").innerHTML = ""
+        fetch("/searchVP", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(searchData),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("xulyList").innerHTML = ""; // Clear previous results
+        var count = 1;
+        data.forEach(function(xuly) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="centered-cell"><input type="checkbox"></td>
+            <td class="centered-cell">`+count+`</td>
+            <td class="centered-cell">${xuly.maXL}</td>
+            <td class="centered-cell">${xuly.maTV}</td>
+            <td class="centered-cell">${xuly.hinhThucXL}</td>
+            <td class="centered-cell">${xuly.soTien}</td>
+            <td class="centered-cell">${xuly.ngayXL}</td>`;
+            if(xuly.trangThaiXL == 0)
+                tr.innerHTML +=`<td class="centered-cell" style="color:red"><strong>Chưa xử lý</strong></td>`;
+            else tr.innerHTML +=`<td class="centered-cell" style="color:green"><strong>Đã xử lý</strong></td>`;
+          document.getElementById("xulyList").appendChild(tr);
+          count += 1;
+        });
+      })
+      .catch((error) => {
+        console.log("error: " + error);
+      });
+    });
+    function searchReload(){
+        document.getElementById('TbButton').addEventListener('click', function () {
+    // Lấy ra checkbox đã chọn
+    const selectedCheckbox = document.querySelector('#dataTable tbody tr input[type="checkbox"]:checked');
+    if (selectedCheckbox) {
+        // Lấy ra hàng chứa checkbox đã chọn
+        const selectedRow = selectedCheckbox.closest('tr');
+
+        // Lấy ra các ô dữ liệu trong hàng đã chọn
+        const cells = selectedRow.querySelectorAll('td');
+
+        // Lấy ra các giá trị từ các ô dữ liệu
+        const maXuLy = cells[2].textContent;
+        const maThanhVien = cells[3].textContent;
+        const hinhThuc = cells[4].textContent;
+        const soTien = cells[5].textContent;
+        const ngayXuLy = cells[6].textContent;
+        let tinhTrang = cells[7].textContent;
+
+        // Xác định tình trạng hiện tại của thiết bị
+        if (tinhTrang === "Hỏng") {
+            tinhTrang = "hong";
+        } else if (tinhTrang === "Sẵn Sàng") {
+            tinhTrang = "sanSang";
+        }
+
+        // Điền các giá trị vào các trường trong form chỉnh sửa
+        document.getElementById('maXL').value = maXuLy;
+        document.getElementById('maTV').value = maThanhVien;
+        document.getElementById('hinhThucxl').value = hinhThuc;
+        document.getElementById('soTienPhat').value = soTien;
+        document.getElementById('ngayXuLyvp').value = ngayXuLy;
+        document.getElementById('tinhTrang').value = tinhTrang;
+
+        // Hiển thị form chỉnh sửa
+        document.getElementById('updateTvForm').style.display = 'block';
+    } else {
+        // Hiển thị thông báo nếu không có thành viên nào được chọn
+        alert('Vui lòng chọn một thành viên để sửa.');
+    }
+});
+    }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="/static/1/vendor/jquery/jquery.min.js"></script>
     <script src="/static/1/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
