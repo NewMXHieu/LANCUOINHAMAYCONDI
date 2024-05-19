@@ -26,7 +26,7 @@ public class Homecontroller {
     @Autowired
     private ThanhVienRepository thanhVienRepository;
 
-    @GetMapping({"","/","/login"})
+    @GetMapping("/login")
     public String LoginPage() {
         return "login";
     }
@@ -49,10 +49,10 @@ public class Homecontroller {
 
 
 //    thanhvien
-    @GetMapping("/qlthanhvien")
+    @GetMapping({"","/","/qlthanhvien"})
     public String qltvPage(Model model) {
-//    List<ThanhVien> memberList = ThanhVienRepository.findAll();
-//    model.addAttribute("memberList", memberList);
+    List<ThanhVien> memberList = thanhVienRepository.findAll();
+    model.addAttribute("memberList", memberList);
     return "qlthanhvien";
 }
 
@@ -239,9 +239,9 @@ public class Homecontroller {
     public Map<String, Object> fileExcelUpload(@RequestParam("excelBtn") MultipartFile file) {
         Map<String, Object> map = new HashMap<>();
         if (!file.isEmpty()) {
+            File convertFile = null;
             try {
-                File convertFile = new File(file.getOriginalFilename());
-                convertFile.createNewFile();
+                convertFile = File.createTempFile("uploaded", ".xlsx");
                 try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                     fos.write(file.getBytes());
                 }
@@ -267,23 +267,24 @@ public class Homecontroller {
                     }
                 }
 
-                convertFile.delete();
-
                 map.put("success", true);
-                map.put("message", "File uploaded and processed successfully");
-
-                return map;
+                map.put("message", "Nhập excel thành công");
             } catch (Exception e) {
                 e.printStackTrace();
                 map.put("success", false);
-                map.put("message", "An error occurred while processing the file: " + e.getMessage());
-                return map;
+                map.put("message", "Lỗi khi nhập excel: " + e.getMessage());
+            } finally {
+                if (convertFile != null && convertFile.exists()) {
+                    convertFile.delete();
+                }
             }
+            return map;
         }
         map.put("success", false);
         map.put("message", "No file uploaded");
         return map;
     }
+
 
 
 

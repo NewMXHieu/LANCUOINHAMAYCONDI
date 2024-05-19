@@ -150,79 +150,93 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-document.getElementById('TvButton').addEventListener('click', function () {
-    // Lấy ra checkbox đã chọn
-    const selectedCheckbox = document.querySelector('#dataTable tbody tr input[type="checkbox"]:checked');
-    if (selectedCheckbox) {
-        // Lấy ra hàng chứa checkbox đã chọn
-        const selectedRow = selectedCheckbox.closest('tr');
-        
-        // Lấy ra các ô dữ liệu trong hàng đã chọn
-        const cells = selectedRow.querySelectorAll('td');
 
-        // Lấy ra các giá trị từ các ô dữ liệu
-        const maThanhVien = cells[1].textContent;
-        const tenThanhVien = cells[2].textContent;
-        const khoa = cells[3].textContent;
-        const nganh = cells[4].textContent;
-        const sdt = cells[5].textContent;
-        const passWord = cells[6].textContent;
-        const email = cells[7].textContent;
+        document.getElementById('TvButton').addEventListener('click', function () {
+            // Lấy ra checkbox đã chọn
+            const selectedCheckbox = document.querySelector('#dataTable tbody tr input[type="checkbox"]:checked');
+            if (selectedCheckbox) {
+                // Lấy ra hàng chứa checkbox đã chọn
+                const selectedRow = selectedCheckbox.closest('tr');
 
-        // Điền các giá trị vào các trường trong form chỉnh sửa
-        document.getElementById('maThanhVien').value = maThanhVien;
-        document.getElementById('hoTen').value = tenThanhVien;
-        document.getElementById('khoa').value = khoa;
-        document.getElementById('nganh').value = nganh;
-        document.getElementById('sdt').value = sdt;
-        document.getElementById('passWord').value = passWord;
-        document.getElementById('email').value = email;
+                // Lấy ra các ô dữ liệu trong hàng đã chọn
+                const cells = selectedRow.querySelectorAll('td');
 
-        // Hiển thị form chỉnh sửa
-        document.getElementById('updateTvForm').style.display = 'block';
-    } else {
-        // Hiển thị thông báo nếu không có thành viên nào được chọn
-        alert('Vui lòng chọn một thành viên để sửa.');
-    }
-});
-// Thêm sự kiện click cho nút bấm con mắt
-document.getElementById('togglePassword').addEventListener('click', function () {
-    // Lấy trường password
-    const passwordInput = document.getElementById('passWord');
-    // Lấy biểu tượng con mắt
-    const eyeIcon = document.getElementById('eyeIcon');
+                // Lấy giá trị của trường mật khẩu bằng ID
+                const passWord = document.getElementById('passWord1').value;
 
-    // Thay đổi kiểu của trường password từ password sang text và ngược lại
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        eyeIcon.classList.remove('fa-eye');
-        eyeIcon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = "password";
-        eyeIcon.classList.remove('fa-eye-slash');
-        eyeIcon.classList.add('fa-eye');
-    }
-});
-document.addEventListener("DOMContentLoaded", function () {
-    // Lắng nghe sự kiện khi click vào nút "Nhập Excel"
-    document.getElementById("importExcelButton").addEventListener("click", function () {
-        // Hiển thị hộp thoại chọn file
-        document.getElementById("excelFileInput").click();
-    });
+                // Lấy ra các giá trị từ các ô dữ liệu
+                const maThanhVien = cells[1].textContent;
+                const tenThanhVien = cells[2].textContent;
+                const khoa = cells[3].textContent;
+                const nganh = cells[4].textContent;
+                const sdt = cells[5].textContent;
+                const email = cells[7].textContent;
 
-    // Lắng nghe sự kiện khi người dùng chọn file từ hộp thoại
-    document.getElementById("excelFileInput").addEventListener("change", function () {
-        // Lấy thông tin file đã chọn
-        var file = document.getElementById("excelFileInput").files[0];
-        // Xử lý file ở đây (ví dụ: in ra tên file)
-        console.log("Đã chọn file: " + file.name);
-    });
-});
+                // Điền các giá trị vào các trường trong form chỉnh sửa
+                document.getElementById('maThanhVien').value = maThanhVien;
+                document.getElementById('hoTen').value = tenThanhVien;
+                document.getElementById('khoa').value = khoa;
+                document.getElementById('nganh').value = nganh;
+                document.getElementById('sdt').value = sdt;
+                document.getElementById('passWord').value = passWord;
+                document.getElementById('email').value = email;
+
+                // Hiển thị form chỉnh sửa
+                document.getElementById('updateTvForm').style.display = 'block';
+            } else {
+                // Hiển thị thông báo nếu không có thành viên nào được chọn
+                alert('Vui lòng chọn một thành viên để sửa.');
+            }
+        });
+
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            // Lấy trường password
+            const passwordInput = document.getElementById('passWord');
+            // Lấy biểu tượng con mắt
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            // Thay đổi kiểu của trường password từ password sang text và ngược lại
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        });
+   document.addEventListener('DOMContentLoaded', function() {
+         document.getElementById('importExcelButton').addEventListener('click', function() {
+             document.getElementById('fileInput').click();
+         });
+
+         document.getElementById('fileInput').addEventListener('change', function() {
+             var file = this.files[0];
+             if (file) {
+                 var formData = new FormData();
+                 formData.append('excelBtn', file);
+
+                 fetch('/thanhVienExcel', {
+                     method: 'POST',
+                     body: formData
+                 })
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.success) {
+                         alert('File uploaded and processed successfully');
+                     } else {
+                         alert('An error occurred: ' + data.message);
+                     }
+                 })
+                 .catch(error => {
+                     alert('An unexpected error occurred: ' + error.message);
+                 });
+             }
+         });
+     });
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('importExcelButton').addEventListener('click', function () {
-        document.getElementById('excelFileInput').click();
-    });
 
     document.getElementById('addMemberButton').addEventListener('click', function () {
         document.getElementById('addTvForm').style.display = 'block';
