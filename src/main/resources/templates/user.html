@@ -224,9 +224,9 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                <a class="nav-link dropdown-toggle" href="http://localhost:8080/login" id="userDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Phạm Minh</span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Đăng xuất</span>
                     <img class="img-profile rounded-circle"
                          src="/static/1/images/hinh2.jpg">
                 </a>
@@ -270,19 +270,19 @@
         </div>
         <div class="user-info">
             <label for="major">Tên Ngành:</label>
-            <p id="major">Tên ngành từ cơ sở dữ liệu</p>
+            <p id="major" th:text="${thanhVien.nganh}">Tên ngành từ cơ sở dữ liệu</p>
         </div>
         <div class="user-info">
             <label for="faculty">Tên Khoa:</label>
-            <p id="faculty">Tên khoa từ cơ sở dữ liệu</p>
+            <p id="faculty" th:text="${thanhVien.khoa}">Tên khoa từ cơ sở dữ liệu</p>
         </div>
         <div class="user-info">
             <label for="phoneNumber">Số Điện Thoại:</label>
-            <p id="phoneNumber">Số điện thoại từ cơ sở dữ liệu</p>
+            <p id="phoneNumber" th:text="${thanhVien.sdt}">Số điện thoại từ cơ sở dữ liệu</p>
         </div>
         <div class="user-info">
             <label for="email">Email:</label>
-            <p id="email">Email từ cơ sở dữ liệu</p>
+            <p id="email" th:text="${thanhVien.email}">Email từ cơ sở dữ liệu</p>
         </div>
         <div class="btn-container">
             <button class="btn" onclick="showChangePasswordModal()">Đổi mật khẩu</button>

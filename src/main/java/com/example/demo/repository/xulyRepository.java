@@ -14,3 +14,4 @@ public interface xulyRepository extends JpaRepository<xuly,Integer> {
     @Query("SELECT x FROM xuly x WHERE CAST(x.maTV AS string) LIKE CONCAT('%', :maTV, '%')")
     List<xuly> searchMaTV(String maTV);
 }
+
