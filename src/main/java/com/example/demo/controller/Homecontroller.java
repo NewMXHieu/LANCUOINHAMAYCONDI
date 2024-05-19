@@ -311,9 +311,18 @@ public class Homecontroller {
         return "thongke";
     }
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute ThanhVien thanhVien) {
+    public String registerUser(@ModelAttribute ThanhVien thanhVien, @RequestParam("user") String username,
+            @RequestParam("password") String password,
+            @RequestParam("name") String name,
+            @RequestParam("nganh") String nganh,
+            @RequestParam("khoa") String khoa,
+            @RequestParam("sdt") String sdt,
+            @RequestParam("email") String email) {
         // Xử lý logic đăng ký người dùng ở đây
+        ;
+        thanhVien = new ThanhVien(Integer.parseInt(username), name, khoa, nganh, sdt, password, email);
         // Sau khi đăng ký thành công, chuyển hướng về trang đăng nhập
+        thanhVienRepository.save(thanhVien);
         return "redirect:/login";
     }
     @PostMapping("/login")
