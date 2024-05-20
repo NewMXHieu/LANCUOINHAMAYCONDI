@@ -9,4 +9,9 @@ public interface ThietBiService {
     Page<ThietBi> listAll(int pageNum);
 
     List<ThietBi> getAllSearch(String keyword);
+
+    List<ThietBi> getAllThietBi();
+    ThietBi saveThietBi(ThietBi thietBi);
+    void deleteThietBiById(int id);
+
 }

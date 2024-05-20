@@ -305,10 +305,7 @@ public class Homecontroller {
 
 
 
-    @GetMapping("/quanlytb")
-    public String qltbPage() {
-        return "quanlytb";
-    }
+
     @GetMapping("/xulyvp")
     public String xlvpPage(Model model) {
         List<xuly> xulyList = xuLyRepository.findAll();

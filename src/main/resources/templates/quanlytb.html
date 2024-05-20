@@ -21,7 +21,10 @@
     <!-- Custom styles for this template-->
     <link href="/static/1/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="/static/1/css/style5.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
+
 
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -53,7 +56,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="#" th:href="@{quanlytb}">
+                <a class="nav-link" href="#" th:href="@{qlthietbi}">
                     <span>Quản Lý Thiết Bị</span></a>
             </li>
 
@@ -93,7 +96,7 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Nhập tên thành viên..."
+                            <input type="text" class="form-control bg-light border-0 small" id = "seachnametb" placeholder="Nhập tên thành viên..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -102,7 +105,35 @@
                             </div>
                         </div>
                     </form>
+<script>
+    $('.form-control.bg-light.border-0.small').on('input', function() {
+        var keyword = $(this).val();
+         // Only send request when at least 3 characters are typed
+            $.ajax({
+                url: '/qlthietbi/search',
+                method: 'GET',
+                data: { keyword: keyword },
+                success: function(response) {
+                    // Clear old data before adding new data
+                    $('#dataTable tbody').empty();
+                    // Iterate through each result and append to the table
+                    response.forEach(function(item) {
+                        var row = '<tr>' +
+                            '<td class="centered-cell"><input type="checkbox"></td>' +
+                            '<td>' + item.maTB + '</td>' +
+                            '<td>' + item.tenTB + '</td>' +
+                            '<td>' + item.moTa + '</td>' +
+                            '</tr>';
+                        $('#dataTable tbody').append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error); // Handle errors if necessary
+                }
+            });
 
+    });
+</script>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -183,165 +214,18 @@
                                     <thead>
                                         <tr>
                                             <th class="centered-cell">Chọn</th>
-                                            <th class="centered-cell">STT</th>
                                             <th class="centered-cell">Mã Thiết Bị</th>
                                             <th class="centered-cell">Tên Thiết Bị</th>
                                             <th class="centered-cell">Mô Tả</th>
-                                            <th class="centered-cell">Tình Trạng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">01</td>
-                                            <td class="centered-cell">120191</td>
-                                            <td class="centered-cell">Micro không dây 01</td>
-                                            <td class="centered-cell">JLB VM 2001</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
 
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">02</td>
-                                            <td class="centered-cell">120192</td>
-                                            <td class="centered-cell">Micro có dây 01</td>
-                                            <td class="centered-cell">MCCD 1001</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">03</td>
-                                            <td class="centered-cell">220191</td>
-                                            <td class="centered-cell">Máy chiếu Panasonic</td>
-                                            <td class="centered-cell">PNSN 031</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">04</td>
-                                            <td class="centered-cell">120203</td>
-                                            <td class="centered-cell">Micro không dây 02</td>
-                                            <td class="centered-cell">BCE 9001</td>
-                                            <td class="centered-cell" style="color:RED"><strong>HỎNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">05</td>
-                                            <td class="centered-cell">320201</td>
-                                            <td class="centered-cell">Máy ảnh Fuji</td>
-                                            <td class="centered-cell">FJ 20201</td>
-                                            <td class="centered-cell" style="color:red"><strong>HỎNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">06</td>
-                                            <td class="centered-cell">420201</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell">M3001</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">07</td>
-                                            <td class="centered-cell">120214</td>
-                                            <td class="centered-cell">Micro không dây 03</td>
-                                            <td class="centered-cell">CN 20211</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">08</td>
-                                            <td class="centered-cell">420212</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell">CSTQ 20211</td>
-                                            <td class="centered-cell" style="color:red"><strong>HỎNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">09</td>
-                                            <td class="centered-cell">420213</td>
-                                            <td class="centered-cell">Cassette TQ</td>
-                                            <td class="centered-cell">TVLG021</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">10</td>
-                                            <td class="centered-cell">520221</td>
-                                            <td class="centered-cell">Tivi LG</td>
-                                            <td class="centered-cell">TVSS20221</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">11</td>
-                                            <td class="centered-cell">520222</td>
-                                            <td class="centered-cell">Tivi Samsung</td>
-                                            <td class="centered-cell">CS 20221</td>
-                                            <td class="centered-cell" style="color:red"><strong>HỎNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">12</td>
-                                            <td class="centered-cell">420224</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell">BCE UGX12</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">13</td>
-                                            <td class="centered-cell">120235</td>
-                                            <td class="centered-cell">Micro không dây 03</td>
-                                            <td class="centered-cell">CS 2023</td>
-                                            <td class="centered-cell" style="color:red"><strong>HỎNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">14</td>
-                                            <td class="centered-cell">420236</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell">QD 20231</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">15</td>
-                                            <td class="centered-cell">620231</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell">QD20232</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">16</td>
-                                            <td class="centered-cell">620232</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell">QD20233</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">17</td>
-                                            <td class="centered-cell">620233</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell">QD 20234</td>
-                                            <td class="centered-cell" style="color:green"><strong>SẴN SÀNG</strong></td>
+                                        <tr th:each="thietBi : ${listThietBi}">
+                                            <td class="centered-cell"><input type="checkbox"></td>
+                                            <td th:text="${thietBi.maTB}">Mã TB</td>
+                                            <td th:text="${thietBi.tenTB}">Tên TB</td>
+                                            <td th:text="${thietBi.moTa}">Mô Tả</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -354,53 +238,108 @@
                                 <button id="addDeviceButton" class="btn btn-primary">Thêm Thiết Bị</button>
                                 <button id="deleteTbButton" class="btn btn-danger" disabled>Xoá Thiết Bị</button>
                             </div>
+                            <script>
+                                $('#TbButton').click(function() {
+                                    // Find all checkboxes that are checked
+                                    var checkedCheckboxes = $('input[type="checkbox"]:checked');
+
+                                    // Check if any checkboxes are checked
+                                    if (checkedCheckboxes.length > 0) {
+                                        // Get the first checked checkbox's closest parent row
+                                        var selectedRow = checkedCheckboxes.first().closest('tr');
+
+                                        // Extract data from the selected row
+                                        var maTB = selectedRow.find('td:nth-child(2)').text().trim();
+                                        var tenTB = selectedRow.find('td:nth-child(3)').text().trim();
+                                        var moTa = selectedRow.find('td:nth-child(4)').text().trim();
+
+                                        // Populate form fields with extracted data
+                                        $('#maThietBi').val(maTB);
+                                        $('#tenThietBi').val(tenTB);
+                                        $('#moTa').val(moTa);
+
+                                        // Show the form for editing
+                                        $('#upTbButton').show();
+                                    } else {
+                                        // If no checkboxes are checked, display an alert
+                                        alert("Vui lòng chọn ít nhất một thiết bị để sửa thông tin.");
+                                    }
+                                });
+                            </script>
+                            <script>
+                                $('#deleteTbButton').click(function() {
+                                    // Find all checkboxes that are checked
+                                    var checkedCheckboxes = $('input[type="checkbox"]:checked');
+
+                                    // Check if any checkboxes are checked
+                                    if (checkedCheckboxes.length > 0) {
+                                        // Confirm with the user before proceeding
+                                        if (confirm("Bạn có chắc muốn xoá các thiết bị đã chọn?")) {
+                                            // Array to hold the IDs of selected items
+                                            var selectedIds = [];
+
+                                            // Iterate over each checked checkbox and extract the ID
+                                            checkedCheckboxes.each(function() {
+                                                var id = $(this).closest('tr').find('td:nth-child(2)').text().trim(); // Assuming the ID is in the second column
+                                                selectedIds.push(id);
+                                            });
+
+                                            // Send an AJAX request to delete the selected items
+                                            $.ajax({
+                                                url: '/qlthietbi/xoa',
+                                                method: 'POST',
+                                                data: { ids: selectedIds },
+                                                success: function(response) {
+                                                    // Reload the page or update the UI as needed
+                                                    window.location.reload(); // For example, reload the page to reflect the changes
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.error(error); // Handle errors if necessary
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        // If no checkboxes are checked, display an alert
+                                        alert("Vui lòng chọn ít nhất một thiết bị để xoá.");
+                                    }
+                                });
+                            </script>
                             <div id="upTbButton" style="display: none;">
                                 <button id="closeFormButton" class="btn-close">X</button>
-                                <form id="upTbButtonContent">
+                                <form id="upTbButtonContent" th:action="@{/qlthietbi/capnhat}" method="post">
                                     <div class="form-group">
                                         <label for="maThietBi">Mã Thiết Bị:</label>
-                                        <input type="text" class="form-control" id="maThietBi" placeholder="Nhập mã thiết bị">
+                                        <input type="text" class="form-control" id="maThietBi" name="maTB" placeholder="Nhập mã thiết bị" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="tenThietBi">Tên Thiết Bị</label>
-                                        <input type="text" class="form-control" id="tenThietBi" placeholder="Nhập tên thiết bị">
+                                        <input type="text" class="form-control" id="tenThietBi" name="tenTB" placeholder="Nhập tên thiết bị">
                                     </div>
                                     <div class="form-group">
                                         <label for="moTa">Mô Tả</label>
-                                        <input type="text" class="form-control" id="moTa" placeholder="Nhập mô tả thiết bị">
+                                        <input type="text" class="form-control" id="moTa" name="moTa" placeholder="Nhập mô tả thiết bị">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="tinhTrang">Tình Trạng</label>
-                                        <select class="form-control" id="tinhTrang">
-                                            <option value="hong">Hỏng</option>
-                                            <option value="sanSang">Sẵn Sàng</option>
-                                        </select>
-                                    </div>
+
                                     <button type="submit" class="btn btn-primary">Lưu</button>
                                 </form>
                             </div>
+
                             <div id="addTbButtonContent">
                                 <button id="closeAddFormButton" class="btn-close">X</button>
-                                <form id="addTbForm">
+                                <form id="addTbFormm"  th:action="@{/qlthietbi/add}" method="post" >
                                     <div class="form-group">
                                         <label for="tmaThietBi">Mã Thiết Bị:</label>
-                                        <input type="text" class="form-control" id="tmaThietBi" placeholder="Nhập mã thiết bị">
+                                        <input type="text" class="form-control" id="tmaThietBi"  name="maTB" placeholder="Nhập mã thiết bị">
                                     </div>
                                     <div class="form-group">
                                         <label for="ttenThietBi">Tên Thiết Bị</label>
-                                        <input type="text" class="form-control" id="ttenThietBi" placeholder="Nhập tên thiết bị">
+                                        <input type="text" class="form-control" id="ttenThietBi" name="tenTB" placeholder="Nhập tên thiết bị">
                                     </div>
                                     <div class="form-group">
                                         <label for="moTa">Mô Tả</label>
-                                        <input type="text" class="form-control" id="tmoTa" placeholder="Nhập mô tả thiết bị">
+                                        <input type="text" class="form-control" id="tmoTa"  name="moTa"placeholder="Nhập mô tả thiết bị">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="tinhTrang">Tình Trạng</label>
-                                        <select class="form-control" id="ttinhTrang">
-                                            <option value="hong">Hỏng</option>
-                                            <option value="sanSang">Sẵn Sàng</option>
-                                        </select>
-                                    </div>                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </form>
                             </div>
 
@@ -408,6 +347,8 @@
                     </div>
                 </div>                                                                                                <!-- /.container-fluid -->
             </div>
+
+
             <!-- End of Main Content -->
 
             <!-- Footer -->

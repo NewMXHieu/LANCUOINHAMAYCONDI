@@ -27,4 +27,19 @@ public class ThietBiServiceImpl implements ThietBiService{
         return ThietBiRepository.findByTenTBContaining(keyword);
     }
 
+    @Override
+    public List<ThietBi> getAllThietBi() {
+        return ThietBiRepository.findAll();
+    }
+    @Override
+    public ThietBi saveThietBi(ThietBi thietBi) {
+        return ThietBiRepository.save(thietBi);
+    }
+
+    @Override
+    public void deleteThietBiById(int id) {
+        ThietBiRepository.deleteById(id);
+    }
+
+
 }
