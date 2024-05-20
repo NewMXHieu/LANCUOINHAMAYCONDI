@@ -79,7 +79,7 @@ public class xuly {
     }
     public xuly() {
     }
-    public xuly(int maXL, int maTV, String hinhThucXL, int soTien, String ngayXL, int trangThaiXL){
+    public xuly(int maXL, int maTV, String hiZnhThucXL, int soTien, String ngayXL, int trangThaiXL){
         this.maXL = maXL;
         this.maTV = maTV;
         this.hinhThucXL = hinhThucXL;

@@ -5,6 +5,7 @@ import com.example.demo.repository.ThanhVienRepository;
 import  com.example.demo.repository.xulyRepository;
 import com.example.demo.entity.xuly;
 import com.example.demo.utilities.XulyService;
+import com.example.demo.entity.ThongTinSD;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class xulyController {
     @Autowired
     private XulyService xulyService;
@@ -34,6 +36,17 @@ public class xulyController {
             return xuLyRepository.findAll();
         }
         return this.xulyService.searchMaTV(searchValue);
+    }
+    @GetMapping("/violations")
+    public List<xuly> getAllXuly(@RequestParam String maTV) {
+        // Sử dụng mã thành viên được truyền vào để lấy danh sách các xử lý vi phạm
+        return xulyService.searchMaTV(maTV);
+    }
+
+
+    @GetMapping("/search/{maTV}")
+    public List<xuly> searchXulyByMaTV(@PathVariable String maTV) {
+        return xulyService.searchMaTV(maTV);
     }
     @PostMapping("/themvp")
     @ResponseBody

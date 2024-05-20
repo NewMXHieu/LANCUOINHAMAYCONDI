@@ -252,29 +252,30 @@ function closeChangePasswordModal() {
     // Đóng bảng
     changePasswordModal.style.display = 'none';
 }
-function showBorrowedDevicesTable() {
-    // Lấy tham chiếu đến phần tử tbody của bảng
-    var tableBody = document.getElementById('borrowedDevicesTableBody');
-
-    // Thêm dữ liệu vào bảng
-    var rowData = '<tr>' +
-        '<td>520221</td>' +
-        '<td>Tivi LG</td>' +
-        '<td>1/4</td>' +
-        '<td>8/4</td>' +
-        '<td>Đã mượn</td>' +
-        '</tr>';
-    var rowData2 = '<tr>' +
-        '<td>420213</td>' +
-        '<td>Cassette TQ</td>' +
-        '<td>15/3</td>' +
-        '<td>22/3</td>' +
-        '<td>Đang mượn</td>' +
-        '</tr>';
-    tableBody.innerHTML = rowData + rowData2;
-    // Hiển thị bảng
-    var borrowedDevicesModal = document.getElementById('borrowedDevicesModal');
-    borrowedDevicesModal.style.display = 'block';
+function showBorrowedDevicesTable(maNV) {
+    // Gửi yêu cầu AJAX đến endpoint trên máy chủ
+    $.ajax({
+        url: "/api/get_borrowed_devices_by_id?maNV=" + maNV,
+        type: "GET",
+        success: function(response) {
+            // Xử lý phản hồi từ máy chủ và hiển thị dữ liệu lên bảng
+            var tableHTML = '';
+            response.forEach(function(item) {
+                tableHTML += '<tr>';
+                tableHTML += '<td>' + item.MaTB + '</td>';
+                tableHTML += '<td>' + item.TenTB + '</td>';
+                tableHTML += '<td>' + item.tgmuon + '</td>';
+                tableHTML += '<td>' + item.tgtra + '</td>';
+                tableHTML += '<td>' + item.trangThai + '</td>';
+                tableHTML += '</tr>';
+            });
+            $('#borrowedDevicesTableBody').html(tableHTML);
+        },
+        error: function(xhr, status, error) {
+            // Xử lý lỗi nếu có
+            console.error("Error:", error);
+        }
+    });
 }
 
 function closeBorrowedDevicesTable() {
@@ -282,33 +283,39 @@ function closeBorrowedDevicesTable() {
     var borrowedDevicesModal = document.getElementById('borrowedDevicesModal');
     borrowedDevicesModal.style.display = 'none';
 }
-function showViolationStatus() {
-    // Hiển thị bảng khi click vào nút
-    var table = document.getElementById('violationStatusTable');
-    table.style.display = 'block';
+function showViolationStatus(maTV) {
+    // Hiển thị modal
+    document.getElementById('violationStatusTable').style.display = 'block';
 
-    // Thêm dữ liệu vào bảng
-    var data = [
-        { maThanhVien: 'TV001', ngayViPham: '30-4', xuLy: 'Bị khóa 7 ngày' },
-        { maThanhVien: 'TV002', ngayViPham: '22-4', xuLy: 'Bị khóa 3 ngày' }
-    ];
+    // Gọi AJAX để lấy dữ liệu từ API
+    fetch('/api/violations?maTV=' + maTV)
+        .then(response => response.json())
+        .then(data => {
+            var tbody = document.getElementById('violationStatusTableBody');
+            tbody.innerHTML = '';
 
-    var tableBody = document.getElementById('violationStatusTableBody');
+            // Duyệt qua dữ liệu và thêm vào bảng
+            data.forEach(function(item) {
+                var row = document.createElement('tr');
 
-    // Xóa bất kỳ dữ liệu cũ nào trong tbody
-    tableBody.innerHTML = '';
+                var cell1 = document.createElement('td');
+                cell1.textContent = item.maTV;
+                row.appendChild(cell1);
 
-    // Thêm dữ liệu mới vào tbody
-    data.forEach(function(item) {
-        var row = tableBody.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        cell1.innerHTML = item.maThanhVien;
-        cell2.innerHTML = item.ngayViPham;
-        cell3.innerHTML = item.xuLy;
-    });
+                var cell2 = document.createElement('td');
+                cell2.textContent = item.ngayXL;
+                row.appendChild(cell2);
+
+                var cell3 = document.createElement('td');
+                cell3.textContent = item.hinhThucXL;
+                row.appendChild(cell3);
+
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
 }
+
 function closeViolationTable() {
     // Ẩn modal khi click vào nút đóng
     document.getElementById('violationStatusTable').style.display = 'none';

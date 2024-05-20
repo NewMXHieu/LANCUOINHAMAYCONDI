@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ThanhVien;
+import com.example.demo.entity.ThongTinSD;
 import com.example.demo.repository.TTSDRepository;
 import com.example.demo.repository.ThanhVienRepository;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -55,12 +57,18 @@ public class THANHVIENController {
         // Load lại trang user
         return ResponseEntity.ok(map);
     }
-    @GetMapping
-    public String home(HttpSession session, Model model) {
-        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
-        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
-        return "user";
+
+//    @GetMapping
+//    public String home(HttpSession session, Model model) {
+//        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+//        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
+//        return "user";
+//
+//    }
+
+    @GetMapping("/api/violation-status")
+    public List<ThongTinSD> getViolationStatus() {
+        return ttsdRepository.findAll();
 
     }
-
 }
