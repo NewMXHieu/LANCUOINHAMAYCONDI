@@ -254,24 +254,9 @@ function closeChangePasswordModal() {
 }
 function showBorrowedDevicesTable() {
     // Lấy tham chiếu đến phần tử tbody của bảng
-    var tableBody = document.getElementById('borrowedDevicesTableBody');
 
     // Thêm dữ liệu vào bảng
-    var rowData = '<tr>' +
-        '<td>520221</td>' +
-        '<td>Tivi LG</td>' +
-        '<td>1/4</td>' +
-        '<td>8/4</td>' +
-        '<td>Đã mượn</td>' +
-        '</tr>';
-    var rowData2 = '<tr>' +
-        '<td>420213</td>' +
-        '<td>Cassette TQ</td>' +
-        '<td>15/3</td>' +
-        '<td>22/3</td>' +
-        '<td>Đang mượn</td>' +
-        '</tr>';
-    tableBody.innerHTML = rowData + rowData2;
+
     // Hiển thị bảng
     var borrowedDevicesModal = document.getElementById('borrowedDevicesModal');
     borrowedDevicesModal.style.display = 'block';
@@ -288,26 +273,12 @@ function showViolationStatus() {
     table.style.display = 'block';
 
     // Thêm dữ liệu vào bảng
-    var data = [
-        { maThanhVien: 'TV001', ngayViPham: '30-4', xuLy: 'Bị khóa 7 ngày' },
-        { maThanhVien: 'TV002', ngayViPham: '22-4', xuLy: 'Bị khóa 3 ngày' }
-    ];
 
-    var tableBody = document.getElementById('violationStatusTableBody');
 
-    // Xóa bất kỳ dữ liệu cũ nào trong tbody
-    tableBody.innerHTML = '';
 
-    // Thêm dữ liệu mới vào tbody
-    data.forEach(function(item) {
-        var row = tableBody.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        cell1.innerHTML = item.maThanhVien;
-        cell2.innerHTML = item.ngayViPham;
-        cell3.innerHTML = item.xuLy;
-    });
+
+
+
 }
 function closeViolationTable() {
     // Ẩn modal khi click vào nút đóng

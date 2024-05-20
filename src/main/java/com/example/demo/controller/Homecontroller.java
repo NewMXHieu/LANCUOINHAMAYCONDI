@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.TTSDRepository;
+import com.example.demo.repository.ThietBiRepository;
+import com.example.demo.utilities.ThietBiService;
+import com.example.demo.utilities.ThietBiServiceImpl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.demo.repository.ThanhVienRepository;
 import com.example.demo.repository.xulyRepository;
@@ -20,9 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import com.example.demo.entity.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class Homecontroller {
@@ -32,8 +38,13 @@ public class Homecontroller {
     private ThanhVienRepository thanhVienRepository;
     @Autowired
     private JsonMixinModuleEntries jsonMixinModuleEntries;
+
     @Autowired
     private xulyRepository xuLyRepository;
+    @Autowired
+    private ThietBiRepository thietBiRepository;
+    @Autowired
+    private ThietBiServiceImpl thietBiService;
 
     @GetMapping("/login")
     public String LoginPage() {
@@ -55,14 +66,39 @@ public class Homecontroller {
         // Hiển thị trang người dùng nếu đã đăng nhập
         ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
         model.addAttribute("thanhVien", thanhVien);
+//        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
         return "user";
     }
 
     @GetMapping("/datcho")
-    public String datchoPage() {
+    public String datchoPage(Model model, HttpSession session) {
+        if (!isLoggedIn || session.getAttribute("loggedInUser") == null) {
+            return "redirect:/login"; // Chuyển hướng nếu chưa đăng nhập
+        }
+        // Hiển thị trang người dùng nếu đã đăng nhập
+        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+        model.addAttribute("thanhVien", thanhVien);
+        List<ThietBi> deviceList = thietBiRepository.findAll();
+        model.addAttribute("DeviceList", deviceList);
+
         return "datcho";
     }
 
+    @PostMapping("/dat")
+    public ThongTinSD datThietBi(@RequestParam int maTB,
+                                 @RequestParam String tgMuon, @RequestParam String tgTra, HttpSession session) {
+        LocalDateTime tgMuonDateTime = LocalDateTime.parse(tgMuon);
+        LocalDateTime tgTraDateTime = LocalDateTime.parse(tgTra);
+
+        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+
+        try {
+            return thietBiService.datThietBi(maTB, thanhVien, tgMuonDateTime, tgTraDateTime);
+        } catch (Exception e) {
+            // You can customize the response based on your needs
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
 //    thanhvien
     @GetMapping("/qlthanhvien")

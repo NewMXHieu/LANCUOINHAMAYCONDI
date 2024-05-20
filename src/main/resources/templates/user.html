@@ -368,15 +368,14 @@
                         </tr>
                         </thead>
                         <tbody id="borrowedDevicesTableBody">
-                        <!-- Dữ liệu của bảng sẽ được thêm vào đây -->
-                        <tr th:each="ttsd : ${ttsds}">
-                            <td class="centered-cell" th:text="${ttsd.maTT}"></td>
-                            <td class="centered-cell" th:text="${ttsd.tgDatCho}"></td>
-                            <td class="centered-cell" th:text="${ttsd.tgMuon}"></td>
-                            <td class="centered-cell" th:text="${ttsd.tgTra}"></td>
-                            <td class="centered-cell" th:text="${ttsd.tgVao}"></td>
-                            <td class="centered-cell" th:text="${ttsd.thietBi.getTenTB()}">
-                        </tr>
+                            <tr th:each="ttsd : ${ttsds}">
+                                <td class="centered-cell1" th:text="${ttsd.maTT}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.tgDatCho}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.tgMuon}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.tgTra}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.tgVao}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.thietBi.getTenTB()}">
+                            </tr>
                         </tbody>
                     </table>
                 </div>

@@ -45,6 +45,7 @@ public class THANHVIENController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(map);
         }
 
+
         // Cập nhật mật khẩu mới cho thành viên
         loggedInUser.setPassword(newPassword);
         thanhVienRepository.save(loggedInUser);
@@ -55,12 +56,12 @@ public class THANHVIENController {
         // Load lại trang user
         return ResponseEntity.ok(map);
     }
-    @GetMapping
-    public String home(HttpSession session, Model model) {
-        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
-        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
-        return "user";
-
-    }
+//    @GetMapping("/lichsu")
+//    public String home(HttpSession session, Model model) {
+//        ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
+//        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
+//        return "user";
+//
+//    }
 
 }

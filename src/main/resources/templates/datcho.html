@@ -84,7 +84,7 @@
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div>x
                     </form>
 
                     <!-- Topbar Navbar -->
@@ -167,156 +167,22 @@
                                     <thead>
                                         <tr>
                                             <th class="centered-cell">Chọn</th>
-                                            <th class="centered-cell">STT</th>
+<!--                                            <th class="centered-cell">STT</th>-->
                                             <th class="centered-cell">Mã Thiết Bị</th>
                                             <th class="centered-cell">Tên Thiết Bị</th>
-                                            <th class="centered-cell">Tình Trạng</th>
+<!--                                            <th class="centered-cell">Tình Trạng</th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">01</td>
-                                            <td class="centered-cell">120191</td>
-                                            <td class="centered-cell">Micro không dây 01</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
+
+                                        <tr th:each="device : ${DeviceList}">
+                                            <td class="centered-cell"><input type="checkbox"></td>
+                                            <td class="centered-cell1" th:text="${device.maTB}"></td>
+                                            <td class="centered-cell1" th:text="${device.tenTB}"></td>
+<!--                                            <td class="centered-cell1" th:text="${device.moTa}"></td>-->
+
                                         </tr>
 
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">02</td>
-                                            <td class="centered-cell">120192</td>
-                                            <td class="centered-cell">Micro có dây 01</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">03</td>
-                                            <td class="centered-cell">220191</td>
-                                            <td class="centered-cell">Máy chiếu Panasonic</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox" disabled></td>                                                
-                                            <td class="centered-cell">04</td>
-                                            <td class="centered-cell">120203</td>
-                                            <td class="centered-cell">Micro không dây 02</td>
-                                            <td class="centered-cell" style="color:RED"><strong>HẾT</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox" disabled></td>                                                
-                                            <td class="centered-cell">05</td>
-                                            <td class="centered-cell">320201</td>
-                                            <td class="centered-cell">Máy ảnh Fuji</td>
-                                            <td class="centered-cell" style="color:red"><strong>HẾT</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">06</td>
-                                            <td class="centered-cell">420201</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">07</td>
-                                            <td class="centered-cell">120214</td>
-                                            <td class="centered-cell">Micro không dây 03</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox" disabled></td>                                                
-                                            <td class="centered-cell">08</td>
-                                            <td class="centered-cell">420212</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell" style="color:red"><strong>HẾT</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">09</td>
-                                            <td class="centered-cell">420213</td>
-                                            <td class="centered-cell">Cassette TQ</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">10</td>
-                                            <td class="centered-cell">520221</td>
-                                            <td class="centered-cell">Tivi LG</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox" disabled></td>                                                
-                                            <td class="centered-cell">11</td>
-                                            <td class="centered-cell">520222</td>
-                                            <td class="centered-cell">Tivi Samsung</td>
-                                            <td class="centered-cell" style="color:red"><strong>HẾT</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">12</td>
-                                            <td class="centered-cell">420224</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox" disabled></td>                                                
-                                            <td class="centered-cell">13</td>
-                                            <td class="centered-cell">120235</td>
-                                            <td class="centered-cell">Micro không dây 03</td>
-                                            <td class="centered-cell" style="color:red"><strong>HẾT</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">14</td>
-                                            <td class="centered-cell">420236</td>
-                                            <td class="centered-cell">Cassette Sony</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">15</td>
-                                            <td class="centered-cell">620231</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">16</td>
-                                            <td class="centered-cell">620232</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">17</td>
-                                            <td class="centered-cell">620233</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="centered-cell"><input type="checkbox"></td>                                                
-                                            <td class="centered-cell">18</td>
-                                            <td class="centered-cell">620234</td>
-                                            <td class="centered-cell">Quạt đứng</td>
-                                            <td class="centered-cell" style="color:green"><strong>CÒN</strong></td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -328,17 +194,17 @@
                             </div>
                             <div id="muonForm" style="display: none;">
                                 <button id="closeFormButton" class="btn-close">X</button>
-                                <form id="muonFormContent">
+                                <form id="muonFormContent" th:action="@{/dat}" method="post">
                                     <div class="form-group">
                                         <label for="maThanhVien">Mã Thành Viên:</label>
-                                        <input type="text" class="form-control" id="maThanhVien" placeholder="Nhập mã thành viên">
+                                        <input type="text" class="form-control" id="maThanhVien" th:value="${thanhVien.maTV}"  readonly >
                                     </div>
                                     <div class="form-group">
                                         <label for="hoTen">Họ và Tên:</label>
-                                        <input type="text" class="form-control" id="hoTen" placeholder="Nhập họ và tên">
+                                        <input type="text" class="form-control" id="hoTen" th:value="${thanhVien.hoTen}" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="maThietBiMuon">Mã Các Thiết Bị Mượn:</label>
+                                        <label for="maThietBiMuon">Mã Thiết Bị Mượn:</label>
                                         <input type="text" class="form-control" id="maThietBiMuon" value="" readonly>
                                     </div>
                                     <div class="form-group">
@@ -351,6 +217,22 @@
                                     </div>
                                     <button type="submit" class="btn btn-primary">Gửi Đăng Ký</button>
                                 </form>
+                                <script>
+                                    $('#muonButton').click(function() {
+                                        // Find all checkboxes that are checked
+                                        var checkedCheckboxes = $('input[type="checkbox"]:checked');
+
+                                        // Check if any checkboxes are checked
+                                        if (checkedCheckboxes.length > 0) {
+                                            var selectedRow = checkedCheckboxes.first().closest('tr');
+
+                                            // Extract data from the selected row
+                                            var maTB = selectedRow.find('td:nth-child(1)').text().trim();
+                                            $('#maThietBiMuon').val(maTB);
+
+                                        }
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
