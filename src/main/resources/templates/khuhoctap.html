@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
 
@@ -9,22 +9,18 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Quản Lý Thiết Bị</title>
+    <title>Khu Học Tập</title>
 
     <!-- Custom fonts for this template-->
     <link href="/static/1/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="/static/1/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="/static/1/css/style5.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <link href="/static/1/css/style6.css" rel="stylesheet">
 </head>
-
 
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -41,7 +37,6 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="#" th:href="@{user}">
                     <span>User</span></a>
@@ -73,8 +68,6 @@
                 <a class="nav-link" href="#" th:href="@{khuhoctap}">
                     <span>Khu Học Tập</span></a>
             </li>
-
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -100,7 +93,7 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" id = "seachnametb" placeholder="Nhập tên thành viên..."
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Nhập tên thành viên..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -109,35 +102,7 @@
                             </div>
                         </div>
                     </form>
-<script>
-    $('.form-control.bg-light.border-0.small').on('input', function() {
-        var keyword = $(this).val();
-         // Only send request when at least 3 characters are typed
-            $.ajax({
-                url: '/qlthietbi/search',
-                method: 'GET',
-                data: { keyword: keyword },
-                success: function(response) {
-                    // Clear old data before adding new data
-                    $('#dataTable tbody').empty();
-                    // Iterate through each result and append to the table
-                    response.forEach(function(item) {
-                        var row = '<tr>' +
-                            '<td class="centered-cell"><input type="checkbox"></td>' +
-                            '<td>' + item.maTB + '</td>' +
-                            '<td>' + item.tenTB + '</td>' +
-                            '<td>' + item.moTa + '</td>' +
-                            '</tr>';
-                        $('#dataTable tbody').append(row);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error); // Handle errors if necessary
-                }
-            });
 
-    });
-</script>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -210,7 +175,7 @@
                     <!-- Card Header - Dropdown -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">QUẢN LÝ THIẾT BỊ</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">KHU HỌC TẬP</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -218,19 +183,33 @@
                                     <thead>
                                         <tr>
                                             <th class="centered-cell">Chọn</th>
+                                            <th class="centered-cell">MaTT</th>
+                                            <th class="centered-cell">Mã Thành Viên</th>
                                             <th class="centered-cell">Mã Thiết Bị</th>
-                                            <th class="centered-cell">Tên Thiết Bị</th>
-                                            <th class="centered-cell">Mô Tả</th>
+                                            <th class="centered-cell">Thời Gian Vào</th>
+                                            <th class="centered-cell">Thời Gian Mượn</th>
+                                            <th class="centered-cell">Thời Gian Trả</th>
+                                            <th class="centered-cell">Thời Gian Đặt Chỗ</th>
+
                                         </tr>
                                     </thead>
-                                    <tbody>
-
-                                        <tr th:each="thietBi : ${listThietBi}">
-                                            <td class="centered-cell"><input type="checkbox"></td>
-                                            <td th:text="${thietBi.maTB}">Mã TB</td>
-                                            <td th:text="${thietBi.tenTB}">Tên TB</td>
-                                            <td th:text="${thietBi.moTa}">Mô Tả</td>
-                                        </tr>
+                                    <tbody id="memberList">
+                                    <tr th:each="member : ${thongtinsd}">
+                                        <td class="centered-cell"><input id="checkbox" type="checkbox" th:value="${thongtinsd.matt}" ></td>
+                                        <td class="centered-cell" th:text="${member.maTV}"></td>
+                                        <td class="centered-cell" th:text="${member.hoTen}"></td>
+                                        <td class="centered-cell" th:text="${member.khoa}"></td>
+                                        <td class="centered-cell" th:text="${member.nganh}"></td>
+                                        <td class="centered-cell" th:text="${member.sdt}"></td>
+                                        <td class="centered-cell">
+                                            <div class="password-container">
+                                                <input type="password" id="passWord1" class="password-input" th:value="${member.password}" readonly autocomplete="current-password">
+                                                <!-- Displaying password for demonstration purposes, consider security implications -->
+                                                <span class="toggle-password" onclick="togglePasswordVisibility(event)">👁️</span>
+                                            </div>
+                                        </td>
+                                        <td class="centered-cell" th:text="${member.email}"></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -238,121 +217,45 @@
                                 <button id="prevPage"><i class="fas fa-chevron-left"></i></button>
                                 <div id="pageNumbers" class="page-numbers"></div>
                                 <button id="nextPage"><i class="fas fa-chevron-right"></i></button>
-                                <button id="TbButton" class="btn btn-success" disabled>Sửa Thông Tin</button>
-                                <button id="addDeviceButton" class="btn btn-primary">Thêm Thiết Bị</button>
-                                <button id="deleteTbButton" class="btn btn-danger" disabled>Xoá Thiết Bị</button>
+                                <button id="TvButton1" class="btn btn-success">Xoá Khỏi Khu Học Tập</button>
+                                <button id="TvButton2" class="btn btn-success">Thêm Vào Khu Học Tập</button>
+                                <button id="TvButton3" class="btn btn-success" >Cập Nhật</button>
                             </div>
-                            <script>
-                                $('#TbButton').click(function() {
-                                    // Find all checkboxes that are checked
-                                    var checkedCheckboxes = $('input[type="checkbox"]:checked');
-
-                                    // Check if any checkboxes are checked
-                                    if (checkedCheckboxes.length > 0) {
-                                        // Get the first checked checkbox's closest parent row
-                                        var selectedRow = checkedCheckboxes.first().closest('tr');
-
-                                        // Extract data from the selected row
-                                        var maTB = selectedRow.find('td:nth-child(2)').text().trim();
-                                        var tenTB = selectedRow.find('td:nth-child(3)').text().trim();
-                                        var moTa = selectedRow.find('td:nth-child(4)').text().trim();
-
-                                        // Populate form fields with extracted data
-                                        $('#maThietBi').val(maTB);
-                                        $('#tenThietBi').val(tenTB);
-                                        $('#moTa').val(moTa);
-
-                                        // Show the form for editing
-                                        $('#upTbButton').show();
-                                    } else {
-                                        // If no checkboxes are checked, display an alert
-                                        alert("Vui lòng chọn ít nhất một thiết bị để sửa thông tin.");
-                                    }
-                                });
-                            </script>
-                            <script>
-                                $('#deleteTbButton').click(function() {
-                                    // Find all checkboxes that are checked
-                                    var checkedCheckboxes = $('input[type="checkbox"]:checked');
-
-                                    // Check if any checkboxes are checked
-                                    if (checkedCheckboxes.length > 0) {
-                                        // Confirm with the user before proceeding
-                                        if (confirm("Bạn có chắc muốn xoá các thiết bị đã chọn?")) {
-                                            // Array to hold the IDs of selected items
-                                            var selectedIds = [];
-
-                                            // Iterate over each checked checkbox and extract the ID
-                                            checkedCheckboxes.each(function() {
-                                                var id = $(this).closest('tr').find('td:nth-child(2)').text().trim(); // Assuming the ID is in the second column
-                                                selectedIds.push(id);
-                                            });
-
-                                            // Send an AJAX request to delete the selected items
-                                            $.ajax({
-                                                url: '/qlthietbi/xoa',
-                                                method: 'POST',
-                                                data: { ids: selectedIds },
-                                                success: function(response) {
-                                                    // Reload the page or update the UI as needed
-                                                    window.location.reload(); // For example, reload the page to reflect the changes
-                                                },
-                                                error: function(xhr, status, error) {
-                                                    console.error(error); // Handle errors if necessary
-                                                }
-                                            });
-                                        }
-                                    } else {
-                                        // If no checkboxes are checked, display an alert
-                                        alert("Vui lòng chọn ít nhất một thiết bị để xoá.");
-                                    }
-                                });
-                            </script>
                             <div id="upTbButton" style="display: none;">
                                 <button id="closeFormButton" class="btn-close">X</button>
-                                <form id="upTbButtonContent" th:action="@{/qlthietbi/capnhat}" method="post">
+                                <form id="upTbButtonContent">
                                     <div class="form-group">
-                                        <label for="maThietBi">Mã Thiết Bị:</label>
-                                        <input type="text" class="form-control" id="maThietBi" name="maTB" placeholder="Nhập mã thiết bị" readonly>
+                                        <label for="maThanhVien">Mã Thành Viên</label>
+                                        <input type="text" class="form-control" id="maThanhVien" placeholder="Nhập mã thành viên">
                                     </div>
                                     <div class="form-group">
-                                        <label for="tenThietBi">Tên Thiết Bị</label>
-                                        <input type="text" class="form-control" id="tenThietBi" name="tenTB" placeholder="Nhập tên thiết bị">
+                                        <label for="maThietBi">Mã Thiết Bị</label>
+                                        <input type="text" class="form-control" id="maThietBi" placeholder="Nhập mã thiết bị">
                                     </div>
                                     <div class="form-group">
-                                        <label for="moTa">Mô Tả</label>
-                                        <input type="text" class="form-control" id="moTa" name="moTa" placeholder="Nhập mô tả thiết bị">
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Lưu</button>
-                                </form>
-                            </div>
-
-                            <div id="addTbButtonContent">
-                                <button id="closeAddFormButton" class="btn-close">X</button>
-                                <form id="addTbFormm"  th:action="@{/qlthietbi/add}" method="post" >
-                                    <div class="form-group">
-                                        <label for="tmaThietBi">Mã Thiết Bị:</label>
-                                        <input type="text" class="form-control" id="tmaThietBi"  name="maTB" placeholder="Nhập mã thiết bị">
+                                        <label for="tgvao">Thời Gian Vào</label>
+                                        <input type="text" class="form-control" id="tgvao" placeholder="Nhập thời gian vào">
                                     </div>
                                     <div class="form-group">
-                                        <label for="ttenThietBi">Tên Thiết Bị</label>
-                                        <input type="text" class="form-control" id="ttenThietBi" name="tenTB" placeholder="Nhập tên thiết bị">
+                                        <label for="tgmuon">Thời Gian Mượn</label>
+                                        <input type="text" class="form-control" id="tgmuon" placeholder="Nhập thời gian mượn">
                                     </div>
                                     <div class="form-group">
-                                        <label for="moTa">Mô Tả</label>
-                                        <input type="text" class="form-control" id="tmoTa"  name="moTa"placeholder="Nhập mô tả thiết bị">
+                                        <label for="tgtra">Thời Gian Trả</label>
+                                        <input type="text" class="form-control" id="tgtra" placeholder="Nhập thời gian trả">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tgdatcho">Thời Gian Đặt Chỗ</label>
+                                        <input type="text" class="form-control" id="tgdatcho" placeholder="Nhập thời gian đặt chỗ">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Lưu</button>
                                 </form>
+                                
                             </div>
-
                         </div>
                     </div>
                 </div>                                                                                                <!-- /.container-fluid -->
             </div>
-
-
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -408,7 +311,7 @@
 
     <!-- Page level plugins -->
     <script src="/static/1/vendor/chart.js/Chart.min.js"></script>
-    <script src="/static/1/js/scripts2.js"></script>
+    <script src="/static/1/js/scripts5.js"></script>
 
 
     <!-- Page level custom scripts -->
