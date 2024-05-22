@@ -346,8 +346,6 @@
                             <th>Hình thức xử lý</th>
                             <th>Số tiền</th>
                             <th>Ngày xử lý</th>
-                            <th>Trạng thái xử lý</th>
-
                         </tr>
                         </thead>
                         <tbody id="violationStatusTableBody">
@@ -356,7 +354,6 @@
                             <td class="centered-cell1" th:text="${ttxuly.getHinhThucXL()}"></td>
                             <td class="centered-cell1" th:text="${ttxuly.getSoTien()}"></td>
                             <td class="centered-cell1" th:text="${ttxuly.getNgayXL()}"></td>
-                            <td class="centered-cell1" th:text="${ttxuly.getTrangThaiXL()}"></td>
 
                         </tr>
                         </tbody>
@@ -370,8 +367,9 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Mã thiết bị</th>
+                            <th>Mã thông tin sử dụng</th>
                             <th>Tên thiết bị</th>
+                            <th>Ngày đặt</th>
                             <th>Ngày mượn</th>
                             <th>Ngày trả</th>
                             <th>Trạng thái</th>
@@ -380,11 +378,11 @@
                         <tbody id="borrowedDevicesTableBody">
                             <tr th:each="ttsd : ${ttsds}">
                                 <td class="centered-cell1" th:text="${ttsd.maTT}"></td>
+                                <td class="centered-cell1" th:text="${ttsd.thietBi.getTenTB()}">
                                 <td class="centered-cell1" th:text="${ttsd.tgDatCho}"></td>
                                 <td class="centered-cell1" th:text="${ttsd.tgMuon}"></td>
                                 <td class="centered-cell1" th:text="${ttsd.tgTra}"></td>
                                 <td class="centered-cell1" th:text="${ttsd.tgVao}"></td>
-                                <td class="centered-cell1" th:text="${ttsd.thietBi.getTenTB()}">
                             </tr>
                         </tbody>
                     </table>

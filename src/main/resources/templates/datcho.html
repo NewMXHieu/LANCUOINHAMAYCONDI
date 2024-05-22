@@ -179,11 +179,20 @@
                                         <tr th:each="device : ${DeviceList}">
                                             <td class="centered-cell"><input type="checkbox"></td>
                                             <!-- Hiển thị số thứ tự tăng dần -->
-<!--                                            <td class="centered-cell" th:text="${iterStat.index + 1}"></td>-->
-                                            <td class="centered-cell1" th:text="${device.maTB}"></td>
+                                            <td class="centered-cell stt"></td>
+s                                            <td class="centered-cell1" th:text="${device.maTB}"></td>
                                             <td class="centered-cell1" th:text="${device.tenTB}"></td>
 
                                         </tr>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                var rows = document.querySelectorAll("#dataTable tbody tr");
+                                                rows.forEach(function(row, index) {
+                                                    var sttCell = row.querySelector(".stt");
+                                                    sttCell.textContent = index + 1;
+                                                });
+                                            });
+                                        </script>
 
                                     </tbody>
                                 </table>

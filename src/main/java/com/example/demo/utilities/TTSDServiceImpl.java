@@ -43,7 +43,7 @@ public class TTSDServiceImpl implements TTSDService{
             thongTinSD.setTgTra(tgTra);
             thongTinSD.setThanhVien(tv);
             thongTinSD.setThietBi(thietBi);
-
+            thongTinSD.setTgDatCho(LocalDateTime.now());
 
             // Set other necessary fields
             return TTSDRepository.save(thongTinSD);

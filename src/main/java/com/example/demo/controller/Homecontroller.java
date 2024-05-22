@@ -102,7 +102,6 @@ public class Homecontroller {
         LocalDateTime tgTraDateTime = LocalDateTime.parse(tgTra + "T00:00:00");
         System.out.println(tgMuonDateTime);
         System.out.println(tgTraDateTime);
-
         ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
 
         try {
