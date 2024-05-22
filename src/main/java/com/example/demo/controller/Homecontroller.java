@@ -45,6 +45,11 @@ public class Homecontroller {
     private ThietBiRepository thietBiRepository;
     @Autowired
     private ThietBiServiceImpl thietBiService;
+    @Autowired
+    private TTSDRepository ttsdRepository;
+    @Autowired
+    private xulyRepository xulyRepository;
+
 
     @GetMapping("/login")
     public String LoginPage() {
@@ -66,7 +71,8 @@ public class Homecontroller {
         // Hiển thị trang người dùng nếu đã đăng nhập
         ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
         model.addAttribute("thanhVien", thanhVien);
-//        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
+        model.addAttribute("ttsds", ttsdRepository.findByThanhVienMaTV(thanhVien.getMaTV()));
+        model.addAttribute("TTXulys", xulyRepository.findByMaTV(thanhVien.getMaTV()));
         return "user";
     }
 

@@ -342,13 +342,23 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Mã thành viên</th>
-                            <th>Ngày vi phạm</th>
-                            <th>Xử lý</th>
+                            <th>Mã xử lý</th>
+                            <th>Hình thức xử lý</th>
+                            <th>Số tiền</th>
+                            <th>Ngày xử lý</th>
+                            <th>Trạng thái xử lý</th>
+
                         </tr>
                         </thead>
                         <tbody id="violationStatusTableBody">
-                        <!-- Dữ liệu của bảng sẽ được thêm vào đây -->
+                        <tr th:each="ttxuly : ${TTXulys}">
+                            <td class="centered-cell1" th:text="${ttxuly.getMaXL()}"></td>
+                            <td class="centered-cell1" th:text="${ttxuly.getHinhThucXL()}"></td>
+                            <td class="centered-cell1" th:text="${ttxuly.getSoTien()}"></td>
+                            <td class="centered-cell1" th:text="${ttxuly.getNgayXL()}"></td>
+                            <td class="centered-cell1" th:text="${ttxuly.getTrangThaiXL()}"></td>
+
+                        </tr>
                         </tbody>
                     </table>
                 </div>
