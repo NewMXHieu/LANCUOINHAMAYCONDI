@@ -40,15 +40,15 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="datcho.html">
+                <a class="nav-link" href="#" th:href="@{datcho}">
                     <span>Trang đặt chỗ</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="user.html">
+                <a class="nav-link" href="#" th:href="@{user}">
                     <span>User</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="qlthanhvien.html">
+                <a class="nav-link" href="#" th:href="@{qlthanhvien}">
                     <span>Admin</span></a>
             </li>
 
@@ -117,12 +117,13 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
+                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Phạm Minh</span>
+                            <a class="nav-link dropdown-toggle" href="http://localhost:8084/login" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Đăng xuất</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                     src="/static/1/images/hinh2.jpg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -167,7 +168,7 @@
                                     <thead>
                                         <tr>
                                             <th class="centered-cell">Chọn</th>
-<!--                                            <th class="centered-cell">STT</th>-->
+                                            <th class="centered-cell">STT</th>
                                             <th class="centered-cell">Mã Thiết Bị</th>
                                             <th class="centered-cell">Tên Thiết Bị</th>
 <!--                                            <th class="centered-cell">Tình Trạng</th>-->
@@ -177,9 +178,10 @@
 
                                         <tr th:each="device : ${DeviceList}">
                                             <td class="centered-cell"><input type="checkbox"></td>
+                                            <!-- Hiển thị số thứ tự tăng dần -->
+<!--                                            <td class="centered-cell" th:text="${iterStat.index + 1}"></td>-->
                                             <td class="centered-cell1" th:text="${device.maTB}"></td>
                                             <td class="centered-cell1" th:text="${device.tenTB}"></td>
-<!--                                            <td class="centered-cell1" th:text="${device.moTa}"></td>-->
 
                                         </tr>
 
@@ -197,7 +199,7 @@
                                 <form id="muonFormContent" th:action="@{/dat}" method="post">
                                     <div class="form-group">
                                         <label for="maThanhVien">Mã Thành Viên:</label>
-                                        <input type="text" class="form-control" id="maThanhVien" th:value="${thanhVien.maTV}"  readonly >
+                                        <input type="text"  class="form-control" id="maThanhVien" th:value="${thanhVien.maTV}"  readonly >
                                     </div>
                                     <div class="form-group">
                                         <label for="hoTen">Họ và Tên:</label>
@@ -205,15 +207,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="maThietBiMuon">Mã Thiết Bị Mượn:</label>
-                                        <input type="text" class="form-control" id="maThietBiMuon" value="" readonly>
+                                        <input type="text" name= "maTB" class="form-control" id="maThietBiMuon" value="" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="ngayMuon">Ngày Mượn:</label>
-                                        <input type="date" class="form-control" id="ngayMuon">
+                                        <input type="date" name= "tgMuon" class="form-control" id="ngayMuon">
                                     </div>
                                     <div class="form-group">
                                         <label for="ngayTra">Ngày Trả:</label>
-                                        <input type="date" class="form-control" id="ngayTra">
+                                        <input type="date" name= "tgTra" class="form-control" id="ngayTra">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Gửi Đăng Ký</button>
                                 </form>
@@ -227,9 +229,12 @@
                                             var selectedRow = checkedCheckboxes.first().closest('tr');
 
                                             // Extract data from the selected row
-                                            var maTB = selectedRow.find('td:nth-child(1)').text().trim();
+                                            var maTB = selectedRow.find('td:nth-child(0)').text().trim();
                                             $('#maThietBiMuon').val(maTB);
-
+                                            $('#muonButton').show();
+                                        }else{
+                                            // If no checkboxes are checked, display an alert
+                                            alert("Vui lòng chọn ít nhất một thiết bị để sửa thông tin.");
                                         }
                                     });
                                 </script>

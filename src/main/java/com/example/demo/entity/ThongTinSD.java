@@ -28,10 +28,10 @@ public class ThongTinSD {
     private LocalDateTime  tgDatCho;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MaTV", insertable = false, updatable = false)
+    @JoinColumn(name = "MaTV", insertable = true, updatable = true)
     private ThanhVien thanhVien;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MaTB", insertable = false, updatable = false)
+    @JoinColumn(name = "MaTB", insertable = true, updatable = true)
     private ThietBi thietBi;
 }

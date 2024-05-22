@@ -2,13 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.repository.TTSDRepository;
 import com.example.demo.repository.ThietBiRepository;
-import com.example.demo.utilities.ThietBiService;
-import com.example.demo.utilities.ThietBiServiceImpl;
+import com.example.demo.utilities.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.demo.repository.ThanhVienRepository;
 import com.example.demo.repository.xulyRepository;
-import com.example.demo.utilities.ExcelUtil;
-import com.example.demo.utilities.thanhVienExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.example.demo.entity.*;
@@ -49,6 +48,8 @@ public class Homecontroller {
     private TTSDRepository ttsdRepository;
     @Autowired
     private xulyRepository xulyRepository;
+    @Autowired
+    private TTSDServiceImpl ttsdService;
 
 
     @GetMapping("/login")
@@ -91,19 +92,26 @@ public class Homecontroller {
     }
 
     @PostMapping("/dat")
-    public ThongTinSD datThietBi(@RequestParam int maTB,
-                                 @RequestParam String tgMuon, @RequestParam String tgTra, HttpSession session) {
-        LocalDateTime tgMuonDateTime = LocalDateTime.parse(tgMuon);
-        LocalDateTime tgTraDateTime = LocalDateTime.parse(tgTra);
+    public String datThietBi(@RequestParam int maTB,
+                             @RequestParam String tgMuon,
+                             @RequestParam String tgTra,
+                             HttpSession session) {
+        System.out.println(tgMuon);
+        System.out.println(tgTra);
+        LocalDateTime tgMuonDateTime = LocalDateTime.parse(tgMuon + "T00:00:00");
+        LocalDateTime tgTraDateTime = LocalDateTime.parse(tgTra + "T00:00:00");
+        System.out.println(tgMuonDateTime);
+        System.out.println(tgTraDateTime);
 
         ThanhVien thanhVien = (ThanhVien) session.getAttribute("loggedInUser");
 
         try {
-            return thietBiService.datThietBi(maTB, thanhVien, tgMuonDateTime, tgTraDateTime);
+            ttsdService.datThietBi(maTB, thanhVien, tgMuonDateTime, tgTraDateTime);
         } catch (Exception e) {
             // You can customize the response based on your needs
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+        return "redirect:/datcho";
     }
 
 //    thanhvien

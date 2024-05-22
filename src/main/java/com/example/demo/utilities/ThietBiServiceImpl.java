@@ -19,8 +19,7 @@ public class ThietBiServiceImpl implements ThietBiService{
 
     @Autowired
     private ThietBiRepository ThietBiRepository;
-    @Autowired
-    private TTSDRepository tTSDRepository;
+
     @Override
     public Page<ThietBi> listAll(int pageNum) {
         int pageSize = 5;
@@ -47,24 +46,6 @@ public class ThietBiServiceImpl implements ThietBiService{
         ThietBiRepository.deleteById(id);
     }
 
-    public ThongTinSD datThietBi(int maTB, ThanhVien tv, LocalDateTime tgMuon, LocalDateTime tgTra) throws Exception {
-        List<ThongTinSD> overlappingBookings = tTSDRepository.findOverlappingBookings(maTB, tgMuon, tgTra);
-        if (!overlappingBookings.isEmpty()) {
-            throw new Exception("Thiết bị này đã được đặt trong khoảng thời gian bạn chọn.");
-        }
 
-        ThietBi thietBi = ThietBiRepository.findById(maTB).orElse(null);
-        if (thietBi != null) {
-            ThongTinSD thongTinSD = new ThongTinSD();
-            thongTinSD.setThietBi(thietBi);
-            thongTinSD.setTgMuon(tgMuon);
-            thongTinSD.setTgTra(tgTra);
-
-            thongTinSD.setThanhVien(tv);
-            // Set other necessary fields
-            return tTSDRepository.save(thongTinSD);
-        }
-        return null;
-    }
 
 }
